@@ -11,17 +11,17 @@
 #define KEYPAD_H_
 
 
-#include <stdint.h>
+#include "../../MCAL/dio/dio_types.h"
 
 typedef struct
 {
-	uint8_t u8_row1Pin;
-	uint8_t u8_row2Pin;
-	uint8_t u8_row3Pin;
-	uint8_t u8_col1Pin;
-	uint8_t u8_col2Pin;
-	uint8_t u8_col3Pin;
-	uint8_t u8_col4Pin;
+	uint8_t u8_row1Pin[2];
+	uint8_t u8_row2Pin[2];
+	uint8_t u8_row3Pin[2];
+	uint8_t u8_col1Pin[2];
+	uint8_t u8_col2Pin[2];
+	uint8_t u8_col3Pin[2];
+	uint8_t u8_col4Pin[2];
 }st_keypadConfigType;
 
 

@@ -10,22 +10,28 @@
 #ifndef LCD_H_
 #define LCD_H_
 
-#include <stdint.h>
+#include "../../MCAL/dio/dio_types.h"
 
 
 typedef struct
 {
 	uint8_t u8_mode;
-	uint8_t u8_d0Pin;
-	uint8_t u8_d1Pin;
-	uint8_t u8_d2Pin;
-	uint8_t u8_d3Pin;
-	uint8_t u8_d4Pin;
-	uint8_t u8_d5Pin;
-	uint8_t u8_d6Pin;
-	uint8_t u8_d7Pin;
+	uint8_t u8_d0Pin[2];
+	uint8_t u8_d1Pin[2];
+	uint8_t u8_d2Pin[2];
+	uint8_t u8_d3Pin[2];
+	uint8_t u8_d4Pin[2];
+	uint8_t u8_d5Pin[2];
+	uint8_t u8_d6Pin[2];
+	uint8_t u8_d7Pin[2];
 }st_lcdConfigType;
 
+
+typedef uint8_t u8_en_lcdModeType;
+
+#define LCD_4_BIT_MODE				((u8_en_lcdModeType)0x00)
+#define LCD_8_BIT_MODE				((u8_en_lcdModeType)0x01)
+#define LCD_INVALID_MODE			((u8_en_lcdModeType)0x02)
 
 
 typedef uint8_t u8_en_lcdErrorsType;
