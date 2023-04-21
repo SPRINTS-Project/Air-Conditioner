@@ -1,14 +1,14 @@
 # Air-Conditioner
 
-Project Description:
+# Project Description:
 Using hardware kit, you are required to design air conditioner system
-Hardware components:
+#Hardware components:
 LCD
 Keypad
 Temperature sensor
 Buzzer
 Software
-System requirements:
+#System requirements:
 1- When system start LCD prompt welcome message for 1 second, then display the default temp is 20 ,the message appear for 1 second
 2- ask to set initial temperature for 0.5 second and disappear
 3- display range of temperature min=18,max=35
@@ -26,7 +26,7 @@ Temp value is resettled to 20 degree
 9- after set mode all buttons are not allowed except button_4 and button_5 and display error message for 0.5 second (the operation is not allowed)-add timeout
 
 
-
+#
 Button_1 : Increment
 Button_2 : Decrement
 Button_3 : Set temperature
