@@ -2,7 +2,8 @@
  * STD_Types.h
  *
  * Created: 4/21/2023 5:55:11 PM
- *  Author: Arafa
+ *  Author:  ARAFA ARAFA
+ *	EMAIL : arafa.arafa.prog@gmail.com
  */ 
 
 

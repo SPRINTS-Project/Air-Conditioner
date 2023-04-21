@@ -2,8 +2,8 @@
  * adc_types.h
  *
  * Created: 4/21/2023 3:22:21 AM
- *  Author:  Mahmoud Sarhan
- *	EMAIL : Eng.mahmoud.adel94@gmail.com
+ *  Author:  ARAFA ARAFA
+ *	EMAIL : arafa.arafa.prog@gmail.com
  */ 
 
 

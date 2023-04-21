@@ -2,8 +2,8 @@
  * adc.h
  *
  * Created: 4/21/2023 12:27:22 AM
- *  Author: Mahmoud Sarhan
- *	EMAIL : Eng.mahmoud.adel94@gmail.com
+ *  Author:  ARAFA ARAFA
+ *	EMAIL : arafa.arafa.prog@gmail.com
  */ 
 
 

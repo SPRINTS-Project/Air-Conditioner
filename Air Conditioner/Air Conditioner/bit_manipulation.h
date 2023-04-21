@@ -2,7 +2,8 @@
  * bit_manipulation.h
  *
  * Created: 4/21/2023 5:48:26 PM
- *  Author: Arafa
+ *  Author:  ARAFA ARAFA
+ *	EMAIL : arafa.arafa.prog@gmail.com
  */ 
 
 

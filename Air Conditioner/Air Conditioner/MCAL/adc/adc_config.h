@@ -2,7 +2,8 @@
  * adc_config.h
  *
  * Created: 4/21/2023 5:17:22 PM
- *  Author: Arafa
+ *  Author:  ARAFA ARAFA
+ *	EMAIL : arafa.arafa.prog@gmail.com
  */ 
 
 
