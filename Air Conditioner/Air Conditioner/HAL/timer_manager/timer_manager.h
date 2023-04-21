@@ -12,6 +12,8 @@
 
 #include "../../MCAL/timer/timer_types.h"
 
+
+
 u8_en_timerErrorsType TIMER_Manager_init (st_timerConfigType* st_config);
 u8_en_timerErrorsType TIMER_Manager_start (st_timerConfigType* st_config);
 u8_en_timerErrorsType TIMER_Manager_stop (u8_en_timerNumberType u8_en_timerNum);

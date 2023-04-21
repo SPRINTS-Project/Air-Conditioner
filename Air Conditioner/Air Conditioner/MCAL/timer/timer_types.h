@@ -13,7 +13,7 @@
 #include <stdint.h>
 
 
-//typedef  void (*timerCallBack) (void);
+typedef  void (*timerCallBack) (void);
 
 
 
@@ -55,6 +55,7 @@ typedef struct
 	u8_en_timerPrescalerType u8_timerClock;
 	uint16_t u16_timer_InitialValue;
 	uint8_t u8_timer_ovf_int_enable;
+	timerCallBack callBackFunction;
 }st_timerConfigType;
 
 

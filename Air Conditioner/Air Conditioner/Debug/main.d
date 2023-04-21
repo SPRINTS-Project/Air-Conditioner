@@ -1,4 +1,7 @@
-main.d main.o: .././main.c .././APP/app.h .././APP/../HAL/buzzer/buzzer.h \
+main.d main.o: .././main.c .././APP/app.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
+ .././APP/../HAL/buzzer/buzzer.h \
  .././APP/../HAL/buzzer/../../MCAL/dio/dio_types.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
@@ -11,6 +14,10 @@ main.d main.o: .././main.c .././APP/app.h .././APP/../HAL/buzzer/buzzer.h \
  .././APP/../HAL/timer_manager/../../MCAL/timer/timer_types.h
 
 .././APP/app.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
 
 .././APP/../HAL/buzzer/buzzer.h:
 

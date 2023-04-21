@@ -9,6 +9,9 @@
 
 #ifndef APP_H_
 #define APP_H_
+
+#include <stdlib.h>
+
 #include "../HAL/buzzer/buzzer.h"
 #include "../HAL/keypad/keypad.h"
 #include "../HAL/lcd/lcd.h"
@@ -17,6 +20,12 @@
 
 
 #define APP_TIMER_0_INIT_VALUE		240
+
+typedef uint8_t u8_programStateType;
+
+#define APP_WELCOME				((u8_programStateType)0x00)
+#define APP_SET_TEMP			((u8_programStateType)0x01)
+#define APP_WORKING				((u8_programStateType)0x02)
 
 void APP_start(void);
 
