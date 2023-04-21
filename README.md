@@ -2,12 +2,19 @@
 
 # Project Description:
 Using hardware kit, you are required to design air conditioner system
+#
 #Hardware components:
+#
 LCD
+#
 Keypad
+#
 Temperature sensor
+#
 Buzzer
+#
 Software
+#
 #System requirements:
 #
 1- When system start LCD prompt welcome message for 1 second, then display the default temp is 20 ,the message appear for 1 second
