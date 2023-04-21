@@ -13,6 +13,28 @@
 
 #include <stdint.h>
 
+#define DIO_MAX_PINS	8
+#define DIO_MAX_PORTS	4
+
+#define  DATA_DIRECTION_PORTA	DDRA
+#define  DATA_DIRECTION_PORTB	DDRB
+#define  DATA_DIRECTION_PORTC	DDRC
+#define  DATA_DIRECTION_PORTD	DDRD
+
+
+#define  WR_PORT_A					PORTA
+#define  WR_PORT_B					PORTB
+#define  WR_PORT_C					PORTC
+#define  WR_PORT_D					PORTD
+
+
+
+
+#define  RE_PORT_A					PINA
+#define  RE_PORT_B					PINB
+#define  RE_PORT_C					PINC
+#define  RE_PORT_D					PIND
+
 typedef enum en_dioPortsType
 {
 	porta, portb, portc, portd

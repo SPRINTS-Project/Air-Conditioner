@@ -5,31 +5,11 @@
  *  Author: Mahmoud Sarhan
  *	EMAIL : Eng.mahmoud.adel94@gmail.com
  */ 
-#include <avr/io.h>
+
 #include "dio.h"
 
 
-#define DIO_MAX_PINS	8
-#define DIO_MAX_PORTS	4
 
-#define  DATA_DIRECTION_PORTA	DDRA
-#define  DATA_DIRECTION_PORTB	DDRB
-#define  DATA_DIRECTION_PORTC	DDRC
-#define  DATA_DIRECTION_PORTD	DDRD
-
-
-#define  WR_PORT_A					PORTA
-#define  WR_PORT_B					PORTB
-#define  WR_PORT_C					PORTC
-#define  WR_PORT_D					PORTD
-
-
-
-
-#define  RE_PORT_A					PINA
-#define  RE_PORT_B					PINB
-#define  RE_PORT_C					PINC
-#define  RE_PORT_D					PIND
 
 
 u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDirType direction)
