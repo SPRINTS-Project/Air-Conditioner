@@ -10,7 +10,8 @@
 #ifndef TEMP_SENSOR_H_
 #define TEMP_SENSOR_H_
 
-#include <stdint.h>
+#include "../../MCAL/adc/adc_types.h"
+
 
 typedef struct
 {
