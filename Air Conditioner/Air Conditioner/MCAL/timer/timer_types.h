@@ -54,6 +54,7 @@ typedef struct
 	u8_en_timerNumberType u8_timerNum;
 	u8_en_timerPrescalerType u8_timerClock;
 	uint16_t u16_timer_InitialValue;
+	uint8_t u8_timer_ovf_int_enable;
 }st_timerConfigType;
 
 

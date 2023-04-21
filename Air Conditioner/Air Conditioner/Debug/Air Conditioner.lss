@@ -3,27 +3,31 @@ Air Conditioner.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000008c  00000000  00000000  00000054  2**1
+  0 .text         000001d4  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  000000e0  2**0
+  1 .data         00000000  00800060  00800060  00000248  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  000000e0  2**0
+  2 .bss          0000002c  00800060  00800060  00000248  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000248  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000110  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000278  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000048  00000000  00000000  0000014c  2**0
+  5 .debug_aranges 00000170  00000000  00000000  000002b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000005d3  00000000  00000000  00000194  2**0
+  6 .debug_info   000013c2  00000000  00000000  00000424  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000536  00000000  00000000  00000767  2**0
+  7 .debug_abbrev 00000a46  00000000  00000000  000017e6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000001b7  00000000  00000000  00000c9d  2**0
+  8 .debug_line   00000bf5  00000000  00000000  0000222c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000058  00000000  00000000  00000e54  2**2
+  9 .debug_frame  0000021c  00000000  00000000  00002e24  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000031e  00000000  00000000  00000eac  2**0
+ 10 .debug_str    000008d1  00000000  00000000  00003040  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000028  00000000  00000000  000011ca  2**0
+ 11 .debug_loc    00000532  00000000  00000000  00003911  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000f0  00000000  00000000  00003e43  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -69,39 +73,366 @@ Disassembly of section .text:
   68:	1d 92       	st	X+, r1
 
 0000006a <.do_clear_bss_start>:
-  6a:	a0 36       	cpi	r26, 0x60	; 96
+  6a:	ac 38       	cpi	r26, 0x8C	; 140
   6c:	b2 07       	cpc	r27, r18
   6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
-  70:	0e 94 3f 00 	call	0x7e	; 0x7e <main>
-  74:	0c 94 44 00 	jmp	0x88	; 0x88 <_exit>
+  70:	0e 94 a9 00 	call	0x152	; 0x152 <main>
+  74:	0c 94 e8 00 	jmp	0x1d0	; 0x1d0 <_exit>
 
 00000078 <__bad_interrupt>:
   78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-0000007c <APP_start>:
+0000007c <APP_init>:
+	}
+}
 
+
+void APP_init(void)
+{
+  7c:	1f 93       	push	r17
+  7e:	cf 93       	push	r28
+  80:	df 93       	push	r29
+	// Initialize timer 0 in Normal mode with OVF interrupt enabled and interrupt period every 0.5 ms
+	st_gs_timer_0_config.u8_timerNum = TIMER_0;
+  82:	e4 e8       	ldi	r30, 0x84	; 132
+  84:	f0 e0       	ldi	r31, 0x00	; 0
+  86:	10 82       	st	Z, r1
+	st_gs_timer_0_config.u8_timer_ovf_int_enable = 1;
+  88:	d1 e0       	ldi	r29, 0x01	; 1
+  8a:	d4 83       	std	Z+4, r29	; 0x04
+	st_gs_timer_0_config.u16_timer_InitialValue = APP_TIMER_0_INIT_VALUE;
+  8c:	80 ef       	ldi	r24, 0xF0	; 240
+  8e:	90 e0       	ldi	r25, 0x00	; 0
+  90:	93 83       	std	Z+3, r25	; 0x03
+  92:	82 83       	std	Z+2, r24	; 0x02
+	TIMER_Manager_init(&st_gs_timer_0_config);
+  94:	cf 01       	movw	r24, r30
+  96:	0e 94 a8 00 	call	0x150	; 0x150 <TIMER_Manager_init>
+	
+	// Initialize The Temp. sensor 
+	st_gs_tempSensorConfig.u8_channel = ADC_CHANNEL_7;
+  9a:	e1 e8       	ldi	r30, 0x81	; 129
+  9c:	f0 e0       	ldi	r31, 0x00	; 0
+  9e:	87 e0       	ldi	r24, 0x07	; 7
+  a0:	82 83       	std	Z+2, r24	; 0x02
+	st_gs_tempSensorConfig.u8_ref_selection = ADC_AVCC;
+  a2:	d0 83       	st	Z, r29
+	st_gs_tempSensorConfig.u8_prescaler_selection = ADC_PRESCALER_2;
+  a4:	d1 83       	std	Z+1, r29	; 0x01
+	TEMP_SENSOR_init(&st_gs_tempSensorConfig);
+  a6:	cf 01       	movw	r24, r30
+  a8:	0e 94 a7 00 	call	0x14e	; 0x14e <TEMP_SENSOR_init>
+	
+	// Initialize the LCD
+	st_gs_lcdConfig.u8_mode = LCD_4_BIT_MODE;
+  ac:	e0 e7       	ldi	r30, 0x70	; 112
+  ae:	f0 e0       	ldi	r31, 0x00	; 0
+  b0:	10 82       	st	Z, r1
+	st_gs_lcdConfig.u8_d4Pin[0] = porta;
+  b2:	11 86       	std	Z+9, r1	; 0x09
+	st_gs_lcdConfig.u8_d4Pin[1] = pin0;
+  b4:	12 86       	std	Z+10, r1	; 0x0a
+	st_gs_lcdConfig.u8_d5Pin[0] = porta;
+  b6:	13 86       	std	Z+11, r1	; 0x0b
+	st_gs_lcdConfig.u8_d5Pin[1] = pin1;
+  b8:	d4 87       	std	Z+12, r29	; 0x0c
+	st_gs_lcdConfig.u8_d6Pin[0] = porta;
+  ba:	15 86       	std	Z+13, r1	; 0x0d
+	st_gs_lcdConfig.u8_d6Pin[1] = pin2;
+  bc:	c2 e0       	ldi	r28, 0x02	; 2
+  be:	c6 87       	std	Z+14, r28	; 0x0e
+	st_gs_lcdConfig.u8_d7Pin[0] = porta;
+  c0:	17 86       	std	Z+15, r1	; 0x0f
+	st_gs_lcdConfig.u8_d7Pin[1] = pin3;
+  c2:	13 e0       	ldi	r17, 0x03	; 3
+  c4:	10 8b       	std	Z+16, r17	; 0x10
+	LCD_init(&st_gs_lcdConfig);
+  c6:	cf 01       	movw	r24, r30
+  c8:	0e 94 a6 00 	call	0x14c	; 0x14c <LCD_init>
+	
+	// Initialize the keypad
+	st_gs_keypadConfig.u8_col1Pin[0] = portc;
+  cc:	e2 e6       	ldi	r30, 0x62	; 98
+  ce:	f0 e0       	ldi	r31, 0x00	; 0
+  d0:	c6 83       	std	Z+6, r28	; 0x06
+	st_gs_keypadConfig.u8_col1Pin[1] = pin3;
+  d2:	17 83       	std	Z+7, r17	; 0x07
+	st_gs_keypadConfig.u8_col2Pin[0] = portc;
+  d4:	c0 87       	std	Z+8, r28	; 0x08
+	st_gs_keypadConfig.u8_col2Pin[1] = pin4;
+  d6:	84 e0       	ldi	r24, 0x04	; 4
+  d8:	81 87       	std	Z+9, r24	; 0x09
+	st_gs_keypadConfig.u8_col3Pin[0] = portc;
+  da:	c2 87       	std	Z+10, r28	; 0x0a
+	st_gs_keypadConfig.u8_col3Pin[1] = pin5;
+  dc:	85 e0       	ldi	r24, 0x05	; 5
+  de:	83 87       	std	Z+11, r24	; 0x0b
+	st_gs_keypadConfig.u8_col4Pin[0] = portc;
+  e0:	c4 87       	std	Z+12, r28	; 0x0c
+	st_gs_keypadConfig.u8_col4Pin[1] = pin6;
+  e2:	86 e0       	ldi	r24, 0x06	; 6
+  e4:	85 87       	std	Z+13, r24	; 0x0d
+	st_gs_keypadConfig.u8_row1Pin[0] = portc;
+  e6:	c0 83       	st	Z, r28
+	st_gs_keypadConfig.u8_row1Pin[1] = pin0 ;
+  e8:	11 82       	std	Z+1, r1	; 0x01
+	st_gs_keypadConfig.u8_row2Pin[0] = portc;
+  ea:	c2 83       	std	Z+2, r28	; 0x02
+	st_gs_keypadConfig.u8_row2Pin[1] = pin1 ;
+  ec:	d3 83       	std	Z+3, r29	; 0x03
+	st_gs_keypadConfig.u8_row3Pin[0] = portc;
+  ee:	c4 83       	std	Z+4, r28	; 0x04
+	st_gs_keypadConfig.u8_row3Pin[1] = pin2 ;
+  f0:	c5 83       	std	Z+5, r28	; 0x05
+	KEYPAD_init(&st_gs_keypadConfig);
+  f2:	cf 01       	movw	r24, r30
+  f4:	0e 94 a5 00 	call	0x14a	; 0x14a <KEYPAD_init>
+	
+	
+	// Initialize Buzzer
+	st_gs_buzzerConfig.u8_port = portb;
+  f8:	e0 e6       	ldi	r30, 0x60	; 96
+  fa:	f0 e0       	ldi	r31, 0x00	; 0
+  fc:	d1 83       	std	Z+1, r29	; 0x01
+	st_gs_buzzerConfig.u8_pin = pin0;
+  fe:	10 82       	st	Z, r1
+	BUZZER_init(&st_gs_buzzerConfig);
+ 100:	cf 01       	movw	r24, r30
+ 102:	0e 94 8a 00 	call	0x114	; 0x114 <BUZZER_init>
+ 106:	df 91       	pop	r29
+ 108:	cf 91       	pop	r28
+ 10a:	1f 91       	pop	r17
+ 10c:	08 95       	ret
+
+0000010e <APP_start>:
 void APP_init(void);
 
 
 void APP_start(void)
 {
-  7c:	08 95       	ret
+	APP_init();
+ 10e:	0e 94 3e 00 	call	0x7c	; 0x7c <APP_init>
+ 112:	ff cf       	rjmp	.-2      	; 0x112 <APP_start+0x4>
 
-0000007e <main>:
+00000114 <BUZZER_init>:
+static uint8_t u8_gs_buzzerState = NOT_INIT;
+
+
+
+u8_en_buzzerErrorsType BUZZER_init (st_buzzerConfigType* st_config)
+{
+ 114:	cf 93       	push	r28
+ 116:	df 93       	push	r29
+	// Check if the pounter is invalid
+	if (st_config == ((void*)0))
+ 118:	00 97       	sbiw	r24, 0x00	; 0
+ 11a:	99 f0       	breq	.+38     	; 0x142 <BUZZER_init+0x2e>
+ 11c:	ec 01       	movw	r28, r24
+		return BUZZER_E_NOT_OK;
+	
+	// Set Buzzer pin as output
+	u8_en_dioErrors u8_dioRetVal = DIO_init(st_config->u8_port, st_config->u8_pin, STD_OUTPUT);
+ 11e:	68 81       	ld	r22, Y
+ 120:	41 e0       	ldi	r20, 0x01	; 1
+ 122:	89 81       	ldd	r24, Y+1	; 0x01
+ 124:	0e 94 ae 00 	call	0x15c	; 0x15c <DIO_init>
+	
+	// Check if there is an error from dio driver
+	if(u8_dioRetVal)
+ 128:	81 11       	cpse	r24, r1
+ 12a:	0c c0       	rjmp	.+24     	; 0x144 <BUZZER_init+0x30>
+		return u8_dioRetVal;
+	
+	// Store configuration locally
+	st_gs_buzzerConfig.u8_port = st_config->u8_port;
+ 12c:	89 81       	ldd	r24, Y+1	; 0x01
+ 12e:	ea e8       	ldi	r30, 0x8A	; 138
+ 130:	f0 e0       	ldi	r31, 0x00	; 0
+ 132:	81 83       	std	Z+1, r24	; 0x01
+	st_gs_buzzerConfig.u8_pin = st_config->u8_pin;
+ 134:	88 81       	ld	r24, Y
+ 136:	80 83       	st	Z, r24
+	
+	// Change buzzer state
+	u8_gs_buzzerState = INIT;
+ 138:	81 e0       	ldi	r24, 0x01	; 1
+ 13a:	80 93 89 00 	sts	0x0089, r24	; 0x800089 <u8_gs_buzzerState>
+	
+	return BUZZER_E_OK;
+ 13e:	80 e0       	ldi	r24, 0x00	; 0
+ 140:	01 c0       	rjmp	.+2      	; 0x144 <BUZZER_init+0x30>
+
+u8_en_buzzerErrorsType BUZZER_init (st_buzzerConfigType* st_config)
+{
+	// Check if the pounter is invalid
+	if (st_config == ((void*)0))
+		return BUZZER_E_NOT_OK;
+ 142:	86 e0       	ldi	r24, 0x06	; 6
+	
+	// Change buzzer state
+	u8_gs_buzzerState = INIT;
+	
+	return BUZZER_E_OK;
+}
+ 144:	df 91       	pop	r29
+ 146:	cf 91       	pop	r28
+ 148:	08 95       	ret
+
+0000014a <KEYPAD_init>:
+
+
+u8_en_keypadErrorsType KEYPAD_init (st_keypadConfigType* st_config)
+{
+	
+}
+ 14a:	08 95       	ret
+
+0000014c <LCD_init>:
+
+
+u8_en_lcdErrorsType LCD_init (st_lcdConfigType* st_config)
+{
+	
+}
+ 14c:	08 95       	ret
+
+0000014e <TEMP_SENSOR_init>:
+
+
+u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config)
+{
+	
+}
+ 14e:	08 95       	ret
+
+00000150 <TIMER_Manager_init>:
+
+
+u8_en_timerErrorsType TIMER_Manager_init (st_timerConfigType* st_config)
+{
+	
+}
+ 150:	08 95       	ret
+
+00000152 <main>:
 
 
 
 int main(void)
 {
 	APP_start();
-  7e:	0e 94 3e 00 	call	0x7c	; 0x7c <APP_start>
+ 152:	0e 94 87 00 	call	0x10e	; 0x10e <APP_start>
 }
-  82:	80 e0       	ldi	r24, 0x00	; 0
-  84:	90 e0       	ldi	r25, 0x00	; 0
-  86:	08 95       	ret
+ 156:	80 e0       	ldi	r24, 0x00	; 0
+ 158:	90 e0       	ldi	r25, 0x00	; 0
+ 15a:	08 95       	ret
 
-00000088 <_exit>:
-  88:	f8 94       	cli
+0000015c <DIO_init>:
 
-0000008a <__stop_program>:
-  8a:	ff cf       	rjmp	.-2      	; 0x8a <__stop_program>
+
+u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDirType direction)
+{
+	
+	if (pin < DIO_MAX_PINS)
+ 15c:	68 30       	cpi	r22, 0x08	; 8
+ 15e:	a0 f5       	brcc	.+104    	; 0x1c8 <DIO_init+0x6c>
+	{
+		if (port == porta)
+ 160:	81 11       	cpse	r24, r1
+ 162:	0b c0       	rjmp	.+22     	; 0x17a <DIO_init+0x1e>
+		{
+			DATA_DIRECTION_PORTA |= direction << pin;
+ 164:	8a b3       	in	r24, 0x1a	; 26
+ 166:	50 e0       	ldi	r21, 0x00	; 0
+ 168:	02 c0       	rjmp	.+4      	; 0x16e <DIO_init+0x12>
+ 16a:	44 0f       	add	r20, r20
+ 16c:	55 1f       	adc	r21, r21
+ 16e:	6a 95       	dec	r22
+ 170:	e2 f7       	brpl	.-8      	; 0x16a <DIO_init+0xe>
+ 172:	48 2b       	or	r20, r24
+ 174:	4a bb       	out	0x1a, r20	; 26
+			return DIO_E_OK;
+ 176:	80 e0       	ldi	r24, 0x00	; 0
+ 178:	08 95       	ret
+		}
+		else if (port == portb)
+ 17a:	81 30       	cpi	r24, 0x01	; 1
+ 17c:	59 f4       	brne	.+22     	; 0x194 <DIO_init+0x38>
+		{
+			DATA_DIRECTION_PORTB |= direction << pin;
+ 17e:	87 b3       	in	r24, 0x17	; 23
+ 180:	50 e0       	ldi	r21, 0x00	; 0
+ 182:	02 c0       	rjmp	.+4      	; 0x188 <DIO_init+0x2c>
+ 184:	44 0f       	add	r20, r20
+ 186:	55 1f       	adc	r21, r21
+ 188:	6a 95       	dec	r22
+ 18a:	e2 f7       	brpl	.-8      	; 0x184 <DIO_init+0x28>
+ 18c:	48 2b       	or	r20, r24
+ 18e:	47 bb       	out	0x17, r20	; 23
+			return DIO_E_OK;
+ 190:	80 e0       	ldi	r24, 0x00	; 0
+ 192:	08 95       	ret
+		}
+		else if (port == portc)
+ 194:	82 30       	cpi	r24, 0x02	; 2
+ 196:	59 f4       	brne	.+22     	; 0x1ae <DIO_init+0x52>
+		{
+			DATA_DIRECTION_PORTC |= direction << pin;
+ 198:	84 b3       	in	r24, 0x14	; 20
+ 19a:	50 e0       	ldi	r21, 0x00	; 0
+ 19c:	02 c0       	rjmp	.+4      	; 0x1a2 <DIO_init+0x46>
+ 19e:	44 0f       	add	r20, r20
+ 1a0:	55 1f       	adc	r21, r21
+ 1a2:	6a 95       	dec	r22
+ 1a4:	e2 f7       	brpl	.-8      	; 0x19e <DIO_init+0x42>
+ 1a6:	48 2b       	or	r20, r24
+ 1a8:	44 bb       	out	0x14, r20	; 20
+			return DIO_E_OK;
+ 1aa:	80 e0       	ldi	r24, 0x00	; 0
+ 1ac:	08 95       	ret
+		}
+		else if (port == portd)
+ 1ae:	83 30       	cpi	r24, 0x03	; 3
+ 1b0:	69 f4       	brne	.+26     	; 0x1cc <DIO_init+0x70>
+		{
+			DATA_DIRECTION_PORTD |= direction << pin;
+ 1b2:	81 b3       	in	r24, 0x11	; 17
+ 1b4:	50 e0       	ldi	r21, 0x00	; 0
+ 1b6:	02 c0       	rjmp	.+4      	; 0x1bc <DIO_init+0x60>
+ 1b8:	44 0f       	add	r20, r20
+ 1ba:	55 1f       	adc	r21, r21
+ 1bc:	6a 95       	dec	r22
+ 1be:	e2 f7       	brpl	.-8      	; 0x1b8 <DIO_init+0x5c>
+ 1c0:	48 2b       	or	r20, r24
+ 1c2:	41 bb       	out	0x11, r20	; 17
+			return DIO_E_OK;
+ 1c4:	80 e0       	ldi	r24, 0x00	; 0
+ 1c6:	08 95       	ret
+			return DIO_InvalidPort;
+		}
+		
+	}
+	else{
+		return DIO_InvalidPin;
+ 1c8:	81 e0       	ldi	r24, 0x01	; 1
+ 1ca:	08 95       	ret
+			DATA_DIRECTION_PORTD |= direction << pin;
+			return DIO_E_OK;
+		}
+		else
+		{
+			return DIO_InvalidPort;
+ 1cc:	82 e0       	ldi	r24, 0x02	; 2
+		
+	}
+	else{
+		return DIO_InvalidPin;
+	}
+}
+ 1ce:	08 95       	ret
+
+000001d0 <_exit>:
+ 1d0:	f8 94       	cli
+
+000001d2 <__stop_program>:
+ 1d2:	ff cf       	rjmp	.-2      	; 0x1d2 <__stop_program>

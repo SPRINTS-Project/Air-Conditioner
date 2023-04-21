@@ -16,7 +16,7 @@
 #include "../HAL/timer_manager/timer_manager.h"
 
 
-
+#define APP_TIMER_0_INIT_VALUE		240
 
 void APP_start(void);
 
