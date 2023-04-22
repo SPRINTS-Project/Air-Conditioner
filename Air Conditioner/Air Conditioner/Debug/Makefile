@@ -50,8 +50,10 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../APP/app.c \
 ../HAL/buzzer/buzzer.c \
+../HAL/keypad/keypad\ and\ LCD\ intergration.c \
 ../HAL/keypad/keypad.c \
 ../HAL/lcd/lcd.c \
+../HAL/lcd/lcd_test.c \
 ../HAL/temp_sensor/temp_sensor.c \
 ../HAL/timer_manager/timer_manager.c \
 ../main.c \
@@ -69,8 +71,10 @@ ASM_SRCS +=
 OBJS +=  \
 APP/app.o \
 HAL/buzzer/buzzer.o \
+HAL/keypad/keypad\ and\ LCD\ intergration.o \
 HAL/keypad/keypad.o \
 HAL/lcd/lcd.o \
+HAL/lcd/lcd_test.o \
 HAL/temp_sensor/temp_sensor.o \
 HAL/timer_manager/timer_manager.o \
 main.o \
@@ -81,8 +85,10 @@ MCAL/timer/timer.o
 OBJS_AS_ARGS +=  \
 APP/app.o \
 HAL/buzzer/buzzer.o \
+"HAL/keypad/keypad and LCD intergration.o" \
 HAL/keypad/keypad.o \
 HAL/lcd/lcd.o \
+HAL/lcd/lcd_test.o \
 HAL/temp_sensor/temp_sensor.o \
 HAL/timer_manager/timer_manager.o \
 main.o \
@@ -93,8 +99,10 @@ MCAL/timer/timer.o
 C_DEPS +=  \
 APP/app.d \
 HAL/buzzer/buzzer.d \
+HAL/keypad/keypad\ and\ LCD\ intergration.d \
 HAL/keypad/keypad.d \
 HAL/lcd/lcd.d \
+HAL/lcd/lcd_test.d \
 HAL/temp_sensor/temp_sensor.d \
 HAL/timer_manager/timer_manager.d \
 main.d \
@@ -105,8 +113,10 @@ MCAL/timer/timer.d
 C_DEPS_AS_ARGS +=  \
 APP/app.d \
 HAL/buzzer/buzzer.d \
+"HAL/keypad/keypad and LCD intergration.d" \
 HAL/keypad/keypad.d \
 HAL/lcd/lcd.d \
+HAL/lcd/lcd_test.d \
 HAL/temp_sensor/temp_sensor.d \
 HAL/timer_manager/timer_manager.d \
 main.d \
@@ -142,6 +152,13 @@ HAL/buzzer/buzzer.o: ../HAL/buzzer/buzzer.c
 	@echo Finished building: $<
 	
 
+HAL/keypad/keypad\ and\ LCD\ intergration.o: ../HAL/keypad/keypad\ and\ LCD\ intergration.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 HAL/keypad/keypad.o: ../HAL/keypad/keypad.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
@@ -150,6 +167,13 @@ HAL/keypad/keypad.o: ../HAL/keypad/keypad.c
 	
 
 HAL/lcd/lcd.o: ../HAL/lcd/lcd.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+HAL/lcd/lcd_test.o: ../HAL/lcd/lcd_test.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

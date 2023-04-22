@@ -5,7 +5,7 @@
  * Author : Mahmoud Sarhan
  *	EMAIL : Eng.mahmoud.adel94@gmail.com
  */ 
-#define F_CPU 8000000UL
+/*#define F_CPU 8000000UL
 
 
 #include "APP/app.h"
@@ -24,5 +24,5 @@ int main(void)
 	for(uint64_t i=0; i<1000;i++);
 	}
 	//APP_start();
-}
+}*/
 

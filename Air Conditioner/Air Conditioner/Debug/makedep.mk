@@ -6,9 +6,13 @@ APP\app.c
 
 HAL\buzzer\buzzer.c
 
+HAL\keypad\keypad and LCD intergration.c
+
 HAL\keypad\keypad.c
 
 HAL\lcd\lcd.c
+
+HAL\lcd\lcd_test.c
 
 HAL\temp_sensor\temp_sensor.c
 

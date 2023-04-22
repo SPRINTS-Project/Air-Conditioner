@@ -11,8 +11,8 @@
 
 static st_timerConfigType st_gs_timer_0_config;
 static st_tempSensorConfigType st_gs_tempSensorConfig;
-static st_lcdConfigType st_gs_lcdConfig;
-static st_keypadConfigType st_gs_keypadConfig;
+st_lcdConfigType st_gs_lcdConfig;
+ st_keypadConfigType st_gs_keypadConfig;
 static st_buzzerConfigType st_gs_buzzerConfig;
 static u8_programStateType u8_en_gs_programState = APP_WELCOME;
 static uint8_t u8_delay = 0;
