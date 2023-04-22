@@ -74,6 +74,12 @@ void APP_init(void)
 	st_gs_lcdConfig.u8_d6Pin[1] = pin2;
 	st_gs_lcdConfig.u8_d7Pin[0] = porta;
 	st_gs_lcdConfig.u8_d7Pin[1] = pin3;
+	st_gs_lcdConfig.u8_RSpin[0]=porta;
+	st_gs_lcdConfig.u8_RSpin[1]=pin4;
+	st_gs_lcdConfig.u8_RWpin[0]=porta;
+	st_gs_lcdConfig.u8_RWpin[1]=pin5;
+	st_gs_lcdConfig.u8_Epin[0]=porta;
+	st_gs_lcdConfig.u8_Epin[1]=pin6;
 	LCD_init(&st_gs_lcdConfig);
 	
 	// Initialize the keypad
