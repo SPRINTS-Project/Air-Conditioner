@@ -13,17 +13,17 @@
 
 u8_en_timerErrorsType TIMER_Manager_init (st_timerConfigType* st_config)
 {
-	
+	return 0;
 }
 u8_en_timerErrorsType TIMER_Manager_start (st_timerConfigType* st_config)
 {
-	
+	return 0;
 }
 u8_en_timerErrorsType TIMER_Manager_stop (u8_en_timerNumberType u8_en_timerNum)
 {
-	
+	return 0;
 }
 u8_en_timerErrorsType TIMER_Manager_reset (st_timerConfigType* st_config)
 {
-	
+	return 0;
 }

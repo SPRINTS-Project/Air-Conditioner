@@ -15,10 +15,10 @@
 
 u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config)
 {
-	
+	return 0;
 }
 
 u8_en_tempSensorErrorsType TEMP_SENSOR_read (uint8_t * u8_data)
 {
-	
+	return 0;
 }
