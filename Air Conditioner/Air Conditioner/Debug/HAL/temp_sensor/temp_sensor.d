@@ -18,7 +18,8 @@ HAL/temp_sensor/temp_sensor.d HAL/temp_sensor/temp_sensor.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  ../HAL/temp_sensor/../../MCAL/adc/../dio/dio_types.h \
- ../HAL/temp_sensor/../../MCAL/adc/../../bit_manipulation.h
+ ../HAL/temp_sensor/../../MCAL/adc/../../bit_manipulation.h \
+ ../HAL/temp_sensor/../../MCAL/dio/dio.h
 
 ../HAL/temp_sensor/temp_sensor.h:
 
@@ -59,3 +60,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../HAL/temp_sensor/../../MCAL/adc/../dio/dio_types.h:
 
 ../HAL/temp_sensor/../../MCAL/adc/../../bit_manipulation.h:
+
+../HAL/temp_sensor/../../MCAL/dio/dio.h:
