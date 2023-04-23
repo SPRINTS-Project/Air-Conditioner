@@ -71,7 +71,16 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (uint8_t * u8_data)
 			//do nothing
 		}
 		/*get the ADC digital value in analog voltage(DAC) then in temperature degree*/
-		*u8_data = (uint8_t)((uint32_t)l_adc_ret * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
+		if(((uint32_t)l_adc_ret * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR) >= MAX_TEMPERATURE_SENSOR_VALUE)
+		{
+			// if temperature more than maximum ,will saturate at maximum possible temperature the sensor can measure 
+			*u8_data = MAX_TEMPERATURE_SENSOR_VALUE ;
+		}
+		else
+		{
+			*u8_data = (uint8_t)((uint32_t)l_adc_ret * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
+		}
+		
 	}
 	return l_TempSensor_ret;
 }
