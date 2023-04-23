@@ -12,6 +12,7 @@ main.d main.o: .././main.c .././APP/app.h \
  .././APP/../HAL/temp_sensor/temp_sensor.h \
  .././APP/../HAL/temp_sensor/../../MCAL/adc/adc_types.h \
  .././APP/../HAL/timer_manager/timer_manager.h \
+<<<<<<< HEAD
  .././APP/../HAL/timer_manager/../../MCAL/timer/timer_types.h \
  .././MCAL/adc/adc.h .././MCAL/adc/adc_types.h .././MCAL/adc/adc_config.h \
  .././MCAL/adc/../../STD_Types.h .././MCAL/adc/../dio/dio.h \
@@ -25,6 +26,9 @@ main.d main.o: .././main.c .././APP/app.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  .././MCAL/adc/../dio/dio_types.h .././MCAL/adc/../../bit_manipulation.h
+=======
+ .././APP/../HAL/timer_manager/../../MCAL/timer/timer_types.h
+>>>>>>> 4a7be62bab9081be2338ad4a12499a883688378d
 
 .././APP/app.h:
 
@@ -57,6 +61,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././APP/../HAL/timer_manager/timer_manager.h:
 
 .././APP/../HAL/timer_manager/../../MCAL/timer/timer_types.h:
+<<<<<<< HEAD
 
 .././MCAL/adc/adc.h:
 
@@ -89,3 +94,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././MCAL/adc/../dio/dio_types.h:
 
 .././MCAL/adc/../../bit_manipulation.h:
+=======
+>>>>>>> 4a7be62bab9081be2338ad4a12499a883688378d

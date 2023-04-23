@@ -10,7 +10,7 @@
 
 #include "lcd.h"
 #include "../../MCAL/dio/dio.h"
-#define F_CPU 1000000U
+#define F_CPU 8000000U
 #include<util/delay.h>
 extern st_lcdConfigType st_gs_lcdConfig;
 static uint8_t mode;
@@ -49,7 +49,8 @@ u8_en_lcdErrorsType LCD_init (st_lcdConfigType* st_config)
 								ret_val |=DIO_init(st_config->u8_d6Pin[0],st_config->u8_d6Pin[1],STD_OUTPUT);
 								ret_val |=DIO_init(st_config->u8_d7Pin[0],st_config->u8_d7Pin[1],STD_OUTPUT);
 								break;
-	default: ret_val=LCD_E_NOT_OK;break;
+	default: ret_val=LCD_E_NOT_OK;
+				break;
 								
 	}
 	mode=st_config->u8_mode;
@@ -57,9 +58,11 @@ u8_en_lcdErrorsType LCD_init (st_lcdConfigType* st_config)
 }
 u8_en_lcdErrorsType LCD_clear (void)
 {
+
 	u8_en_lcdErrorsType ret_val=LCD_E_OK;
 	ret_val |=LCD_cmd(&st_gs_lcdConfig,0x01);
 	return ret_val;
+
 }
 u8_en_lcdErrorsType LCD_setCursor (uint8_t u8_row,uint8_t u8_col)
 {
@@ -70,7 +73,9 @@ u8_en_lcdErrorsType LCD_setCursor (uint8_t u8_row,uint8_t u8_col)
 		case 2 :LCD_cmd(&st_gs_lcdConfig,0xc0+u8_col-1);break;	
 		default:ret_val=LCD_E_NOT_OK;break;
 	}
+
 	return ret_val;
+
 }
 u8_en_lcdErrorsType LCD_writeString (uint8_t* u8_data)
 {
@@ -80,6 +85,7 @@ u8_en_lcdErrorsType LCD_writeString (uint8_t* u8_data)
 	{
 		ret_val=LCD_E_NOT_OK;
 	}
+
 	else
 	{
 		while(u8_data[i] !='\0')
@@ -91,6 +97,7 @@ u8_en_lcdErrorsType LCD_writeString (uint8_t* u8_data)
 	}
 	return ret_val;
 	
+
 }
 u8_en_lcdErrorsType LCD_writeSpChar (u8_en_lcdSpCharType u8_SpChar)
 {   u8_en_lcdErrorsType ret_val=LCD_E_OK;
@@ -168,11 +175,12 @@ u8_en_lcdErrorsType LCD_cmd(st_lcdConfigType* st_config,uint8_t cmd)
 		//do nothing
 	}
 }
-static void ENABLE(void)
+void ENABLE(void)
 {
 	
 	DIO_writePIN(st_gs_lcdConfig.u8_Epin[0],st_gs_lcdConfig.u8_Epin[1],STD_HIGH);
 	_delay_us(1);
 	DIO_writePIN(st_gs_lcdConfig.u8_Epin[0],st_gs_lcdConfig.u8_Epin[1],STD_LOW);
+	//_delay_us(1);
 
 }
