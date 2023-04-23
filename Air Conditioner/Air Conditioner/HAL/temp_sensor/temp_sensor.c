@@ -57,19 +57,27 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (uint8_t * u8_data)
 	{
 		
 		l_adc_ret = ADC_read(u8_sg_channelID,&f64_l_readTemp_ADC);
-		if( ADC_INTERNAL_2_56V_REF == u8_sg_Vref)
+		if(ADC_E_OK==l_adc_ret)
 		{
-			f64_l_stepSize = ( INTERNAL_VOLTAGE /ADC_MAX_RESOLUTION);
-		}
-		else if(ADC_AVCC == u8_sg_Vref)
-		{
-			f64_l_stepSize = ( AVCC_VOLTAGE /ADC_MAX_RESOLUTION);
+			if( ADC_INTERNAL_2_56V_REF == u8_sg_Vref)
+			{
+				f64_l_stepSize = ( INTERNAL_VOLTAGE /ADC_MAX_RESOLUTION);
+			}
+			else if(ADC_AVCC == u8_sg_Vref)
+			{
+				f64_l_stepSize = ( AVCC_VOLTAGE /ADC_MAX_RESOLUTION);
+			}
+			else
+			{
+				/*l_adc_ret = ADC_E_NOT_OK;*/
+				//do nothing
+			}			
 		}
 		else
 		{
-			/*l_adc_ret = ADC_E_NOT_OK;*/
-			//do nothing
+			l_adc_ret = ADC_E_NOT_OK;
 		}
+		
 		/*get the ADC digital value in analog voltage(DAC) then in temperature degree*/
 		if(((uint32_t)l_adc_ret * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR) >= MAX_TEMPERATURE_SENSOR_VALUE)
 		{
