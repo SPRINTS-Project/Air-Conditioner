@@ -9,7 +9,8 @@
 
 #ifndef APP_H_
 #define APP_H_
-
+#define F_CPU 8000000UL
+#include <util/delay.h>
 #include <stdlib.h>
 
 #include "../HAL/buzzer/buzzer.h"

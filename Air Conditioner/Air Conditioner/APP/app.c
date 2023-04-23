@@ -113,19 +113,17 @@ void APP_welcome(void)
 	LCD_setCursor(1,1);
 	LCD_writeString((uint8_t*)"Welcome");
 	u8_delay = 0 ;
-	while(u8_delay <= 2);
+	//while(u8_delay <= 2);
+	_delay_ms(1000);
 	LCD_clear();
 	LCD_setCursor(1,1);
 	LCD_writeString((uint8_t*)"default Temp is");
 	LCD_setCursor(2,1);
 	LCD_writeString((uint8_t*)"20");
 	u8_delay = 0;
-	while(u8_delay <= 2);
-	LCD_clear();
-	LCD_setCursor(1,1);
-	LCD_writeString((uint8_t*)"Set Initial Temp");
-	u8_delay = 0;
-	while(u8_delay <= 1);
+	//while(u8_delay <= 2);
+	_delay_ms(1000);
+	
 	u8_gs_programTemp = u8_gc_defaultTemp;
 	u8_en_gs_programState = APP_SET_TEMP;
 }
@@ -137,41 +135,53 @@ void APP_set(void)
 {
 	uint8_t u8_keypadData = 0;
 	char ch_arrs_curTempToString[2];
-	itoa(u8_gs_programTemp,ch_arrs_curTempToString,10);
+	LCD_clear();
+	LCD_setCursor(1,1);
+	LCD_writeString((uint8_t*)"Set Initial Temp");
+	u8_delay = 0;
+	//while(u8_delay <= 1);
+	_delay_ms(500);
 	LCD_clear();
 	LCD_setCursor(1,1);
 	LCD_writeString((uint8_t*)"Min=18");
-	LCD_setCursor(1,8);
-	LCD_writeString((uint8_t*)ch_arrs_curTempToString);
+	//LCD_setCursor(1,8);
+	//LCD_writeString((uint8_t*)ch_arrs_curTempToString);
 	LCD_setCursor(1,11);
-	LCD_writeString((uint8_t*)"Min=18");
+	LCD_writeString((uint8_t*)"Max=35");
 	
-	
-	KEYPAD_read(&u8_keypadData);
-	if (u8_keypadData == '1')
+	while(1)
 	{
-		// Increment
-		if (u8_gs_programTemp < 35)
+		itoa(u8_gs_programTemp,ch_arrs_curTempToString,10);
+		LCD_setCursor(1,8);
+		LCD_writeString((uint8_t*)ch_arrs_curTempToString);
+		KEYPAD_read(&u8_keypadData);
+		if (u8_keypadData == '1')
 		{
-			u8_gs_programTemp++;
+			// Increment
+			if (u8_gs_programTemp < 35)
+			{
+				u8_gs_programTemp++;
+			}
+		}
+		else if (u8_keypadData == '2')
+		{
+			// Decrement
+			if (u8_gs_programTemp >18)
+			{
+				u8_gs_programTemp--;
+			}
+		}
+		else if (u8_keypadData == '3')
+		{
+			// Set
+			u8_en_gs_programState = APP_WORKING;
+			break;
+		}
+		else{
+			// do nothing
 		}
 	}
-	else if (u8_keypadData == '2')
-	{
-		// Decrement
-		if (u8_gs_programTemp >18)
-		{
-			u8_gs_programTemp--;
-		}
-	}
-	else if (u8_keypadData == '3')
-	{
-		// Set
-		u8_en_gs_programState = APP_WORKING;
-	}
-	else{
-		// do nothing
-	}
+	
 }
 
 
@@ -181,18 +191,21 @@ void APP_working(void)
 	uint8_t u8_keypadData = 0;
 	char ch_arrs_curTempToString[2];
 	
-	// convert int to string
-	itoa(u8_gs_curTemp,ch_arrs_curTempToString,10);
+	
 	
 	// print current temp
 	LCD_clear();
 	LCD_setCursor(1,1);
 	LCD_writeString((uint8_t*)"Current Temp = ");
-	LCD_setCursor(2,1);
-	LCD_writeString((uint8_t*)ch_arrs_curTempToString);
 	
-
-	if (u8_gs_curTemp > u8_gs_programTemp)
+	
+	while(1)
+	{
+		// convert int to string
+		itoa(u8_gs_curTemp,ch_arrs_curTempToString,10);
+		LCD_setCursor(2,1);
+		LCD_writeString((uint8_t*)ch_arrs_curTempToString);
+		if (u8_gs_curTemp > u8_gs_programTemp)
 	{
 		// print the bell shape 
 		LCD_writeSpChar(LCD_BELL);
@@ -233,18 +246,21 @@ void APP_working(void)
 		
 		// change the program state
 		u8_en_gs_programState = APP_SET_TEMP;
+		break;
 	}
 	else{
 		
 		// Invalid button
-		LCD_clear();
+		/*LCD_clear();
 		LCD_setCursor(1,1);
-		LCD_writeString((uint8_t*)"the operation is not allowed");
+		LCD_writeString((uint8_t*)"the operation is not allowed");*/
 		
 		// 1s timeout
-		u8_delay = 0;
-		while(u8_delay <= 2);
+		//u8_delay = 0;
+		//while(u8_delay <= 2);
 	}
+	}
+	
 }
 
 
