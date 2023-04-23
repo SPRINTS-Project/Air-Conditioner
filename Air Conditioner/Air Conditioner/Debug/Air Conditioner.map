@@ -76,8 +76,6 @@ Discarded input sections
  .text          0x00000000        0x0 HAL/temp_sensor/temp_sensor.o
  .data          0x00000000        0x0 HAL/temp_sensor/temp_sensor.o
  .bss           0x00000000        0x0 HAL/temp_sensor/temp_sensor.o
- .text.TEMP_SENSOR_read
-                0x00000000        0x4 HAL/temp_sensor/temp_sensor.o
  .text          0x00000000        0x0 HAL/timer_manager/timer_manager.o
  .data          0x00000000        0x0 HAL/timer_manager/timer_manager.o
  .bss           0x00000000        0x0 HAL/timer_manager/timer_manager.o
@@ -387,7 +385,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xc8e
+.text           0x00000000      0xca2
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
                 0x00000000                __vector_default
@@ -481,82 +479,85 @@ END GROUP
  .text.APP_set  0x000001d4       0xc6 APP/app.o
                 0x000001d4                APP_set
  .text.APP_working
-                0x0000029a      0x12a APP/app.o
+                0x0000029a      0x13a APP/app.o
                 0x0000029a                APP_working
  .text.APP_start
-                0x000003c4       0x30 APP/app.o
-                0x000003c4                APP_start
+                0x000003d4       0x30 APP/app.o
+                0x000003d4                APP_start
  .text.BUZZER_init
-                0x000003f4       0x36 HAL/buzzer/buzzer.o
-                0x000003f4                BUZZER_init
+                0x00000404       0x36 HAL/buzzer/buzzer.o
+                0x00000404                BUZZER_init
  .text.BUZZER_start
-                0x0000042a       0x1e HAL/buzzer/buzzer.o
-                0x0000042a                BUZZER_start
+                0x0000043a       0x1e HAL/buzzer/buzzer.o
+                0x0000043a                BUZZER_start
  .text.BUZZER_stop
-                0x00000448       0x1e HAL/buzzer/buzzer.o
-                0x00000448                BUZZER_stop
+                0x00000458       0x1e HAL/buzzer/buzzer.o
+                0x00000458                BUZZER_stop
  .text.KEYPAD_init
-                0x00000466       0x7a HAL/keypad/keypad.o
-                0x00000466                KEYPAD_init
+                0x00000476       0x7a HAL/keypad/keypad.o
+                0x00000476                KEYPAD_init
  .text.KEYPAD_read
-                0x000004e0       0xfa HAL/keypad/keypad.o
-                0x000004e0                KEYPAD_read
- .text.ENABLE   0x000005da       0x2a HAL/lcd/lcd.o
- .text.LCD_cmd  0x00000604       0xd6 HAL/lcd/lcd.o
-                0x00000604                LCD_cmd
+                0x000004f0       0xfa HAL/keypad/keypad.o
+                0x000004f0                KEYPAD_read
+ .text.ENABLE   0x000005ea       0x2a HAL/lcd/lcd.o
+ .text.LCD_cmd  0x00000614       0xd6 HAL/lcd/lcd.o
+                0x00000614                LCD_cmd
  .text.LCD_init
-                0x000006da      0x136 HAL/lcd/lcd.o
-                0x000006da                LCD_init
+                0x000006ea      0x136 HAL/lcd/lcd.o
+                0x000006ea                LCD_init
  .text.LCD_clear
-                0x00000810        0xc HAL/lcd/lcd.o
-                0x00000810                LCD_clear
+                0x00000820        0xc HAL/lcd/lcd.o
+                0x00000820                LCD_clear
  .text.LCD_setCursor
-                0x0000081c       0x2a HAL/lcd/lcd.o
-                0x0000081c                LCD_setCursor
+                0x0000082c       0x2a HAL/lcd/lcd.o
+                0x0000082c                LCD_setCursor
  .text.LCD_char
-                0x00000846       0xc8 HAL/lcd/lcd.o
-                0x00000846                LCD_char
+                0x00000856       0xc8 HAL/lcd/lcd.o
+                0x00000856                LCD_char
  .text.LCD_writeString
-                0x0000090e       0x34 HAL/lcd/lcd.o
-                0x0000090e                LCD_writeString
+                0x0000091e       0x34 HAL/lcd/lcd.o
+                0x0000091e                LCD_writeString
  .text.LCD_writeSpChar
-                0x00000942       0x88 HAL/lcd/lcd.o
-                0x00000942                LCD_writeSpChar
+                0x00000952       0x88 HAL/lcd/lcd.o
+                0x00000952                LCD_writeSpChar
  .text.TEMP_SENSOR_init
-                0x000009ca        0x4 HAL/temp_sensor/temp_sensor.o
-                0x000009ca                TEMP_SENSOR_init
+                0x000009da        0x4 HAL/temp_sensor/temp_sensor.o
+                0x000009da                TEMP_SENSOR_init
+ .text.TEMP_SENSOR_read
+                0x000009de        0x4 HAL/temp_sensor/temp_sensor.o
+                0x000009de                TEMP_SENSOR_read
  .text.TIMER_Manager_init
-                0x000009ce        0x4 HAL/timer_manager/timer_manager.o
-                0x000009ce                TIMER_Manager_init
+                0x000009e2        0x4 HAL/timer_manager/timer_manager.o
+                0x000009e2                TIMER_Manager_init
  .text.TIMER_Manager_reset
-                0x000009d2        0x4 HAL/timer_manager/timer_manager.o
-                0x000009d2                TIMER_Manager_reset
- .text.main     0x000009d6        0xa main.o
-                0x000009d6                main
+                0x000009e6        0x4 HAL/timer_manager/timer_manager.o
+                0x000009e6                TIMER_Manager_reset
+ .text.main     0x000009ea        0xa main.o
+                0x000009ea                main
  .text.DIO_init
-                0x000009e0       0x74 MCAL/dio/dio.o
-                0x000009e0                DIO_init
+                0x000009f4       0x74 MCAL/dio/dio.o
+                0x000009f4                DIO_init
  .text.DIO_writePIN
-                0x00000a54       0xf6 MCAL/dio/dio.o
-                0x00000a54                DIO_writePIN
+                0x00000a68       0xf6 MCAL/dio/dio.o
+                0x00000a68                DIO_writePIN
  .text.DIO_readPIN
-                0x00000b4a       0xd6 MCAL/dio/dio.o
-                0x00000b4a                DIO_readPIN
+                0x00000b5e       0xd6 MCAL/dio/dio.o
+                0x00000b5e                DIO_readPIN
  .text.avr-libc
-                0x00000c20       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(itoa_ncheck.o)
-                0x00000c20                __itoa_ncheck
+                0x00000c34       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(itoa_ncheck.o)
+                0x00000c34                __itoa_ncheck
  .text.avr-libc
-                0x00000c36       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(utoa_ncheck.o)
-                0x00000c36                __utoa_ncheck
-                0x00000c38                __utoa_common
+                0x00000c4a       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(utoa_ncheck.o)
+                0x00000c4a                __utoa_ncheck
+                0x00000c4c                __utoa_common
  .text.avr-libc
-                0x00000c6a       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strrev.o)
-                0x00000c6a                strrev
-                0x00000c8a                . = ALIGN (0x2)
+                0x00000c7e       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strrev.o)
+                0x00000c7e                strrev
+                0x00000c9e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000c8a        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000c8a                _exit
-                0x00000c8a                exit
+ .fini9         0x00000c9e        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000c9e                _exit
+                0x00000c9e                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -575,61 +576,64 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000c8a        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000c9e        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000c8e                _etext = .
+                0x00000ca2                _etext = .
 
-.data           0x00800060       0x96 load address 0x00000c8e
+.data           0x00800060       0x98 load address 0x00000ca2
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
+ .data.u8_gs_curTemp
+                0x00800060        0x1 APP/app.o
  *(.gnu.linkonce.d*)
  *(.rodata)
- .rodata        0x00800060        0x8 HAL/lcd/lcd.o
+ .rodata        0x00800061        0x8 HAL/lcd/lcd.o
  *(.rodata*)
  .rodata.str1.1
-                0x00800068       0x82 APP/app.o
+                0x00800069       0x82 APP/app.o
                                  0x85 (size before relaxing)
  .rodata.keypad
-                0x008000ea        0xc HAL/keypad/keypad.o
+                0x008000eb        0xc HAL/keypad/keypad.o
  *(.gnu.linkonce.r*)
-                0x008000f6                . = ALIGN (0x2)
-                0x008000f6                _edata = .
-                0x008000f6                PROVIDE (__data_end, .)
+                0x008000f8                . = ALIGN (0x2)
+ *fill*         0x008000f7        0x1 
+                0x008000f8                _edata = .
+                0x008000f8                PROVIDE (__data_end, .)
 
-.bss            0x008000f6       0x38
-                0x008000f6                PROVIDE (__bss_start, .)
+.bss            0x008000f8       0x38
+                0x008000f8                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.u8_gs_programTemp
-                0x008000f6        0x1 APP/app.o
- .bss.u8_delay  0x008000f7        0x1 APP/app.o
- .bss.u8_en_gs_programState
                 0x008000f8        0x1 APP/app.o
+ .bss.u8_delay  0x008000f9        0x1 APP/app.o
+ .bss.u8_en_gs_programState
+                0x008000fa        0x1 APP/app.o
  .bss.st_gs_buzzerConfig
-                0x008000f9        0x2 APP/app.o
+                0x008000fb        0x2 APP/app.o
  .bss.st_gs_tempSensorConfig
-                0x008000fb        0x3 APP/app.o
+                0x008000fd        0x3 APP/app.o
  .bss.st_gs_timer_0_config
-                0x008000fe        0x7 APP/app.o
+                0x00800100        0x7 APP/app.o
  .bss.u8_gs_buzzerState
-                0x00800105        0x1 HAL/buzzer/buzzer.o
+                0x00800107        0x1 HAL/buzzer/buzzer.o
  .bss.st_gs_buzzerConfig
-                0x00800106        0x2 HAL/buzzer/buzzer.o
- .bss.mode      0x00800108        0x1 HAL/lcd/lcd.o
+                0x00800108        0x2 HAL/buzzer/buzzer.o
+ .bss.mode      0x0080010a        0x1 HAL/lcd/lcd.o
  *(COMMON)
- COMMON         0x00800109       0x25 APP/app.o
-                0x00800109                st_gs_lcdConfig
-                0x00800120                st_gs_keypadConfig
-                0x0080012e                PROVIDE (__bss_end, .)
-                0x00000c8e                __data_load_start = LOADADDR (.data)
-                0x00000d24                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080010b       0x25 APP/app.o
+                0x0080010b                st_gs_lcdConfig
+                0x00800122                st_gs_keypadConfig
+                0x00800130                PROVIDE (__bss_end, .)
+                0x00000ca2                __data_load_start = LOADADDR (.data)
+                0x00000d3a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080012e        0x0
+.noinit         0x00800130        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x0080012e                _end = .
+                0x00800130                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -723,41 +727,41 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x25f4
+.debug_info     0x00000000     0x2638
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_info    0x000004e6      0xc74 APP/app.o
- .debug_info    0x0000115a      0x1b3 HAL/buzzer/buzzer.o
- .debug_info    0x0000130d      0x38f HAL/keypad/keypad.o
- .debug_info    0x0000169c      0x9e9 HAL/lcd/lcd.o
- .debug_info    0x00002085      0x11e HAL/temp_sensor/temp_sensor.o
- .debug_info    0x000021a3      0x1c0 HAL/timer_manager/timer_manager.o
- .debug_info    0x00002363       0x9e main.o
- .debug_info    0x00002401      0x1f3 MCAL/dio/dio.o
+ .debug_info    0x000004e6      0xca6 APP/app.o
+ .debug_info    0x0000118c      0x1b3 HAL/buzzer/buzzer.o
+ .debug_info    0x0000133f      0x38f HAL/keypad/keypad.o
+ .debug_info    0x000016ce      0x9e9 HAL/lcd/lcd.o
+ .debug_info    0x000020b7      0x130 HAL/temp_sensor/temp_sensor.o
+ .debug_info    0x000021e7      0x1c0 HAL/timer_manager/timer_manager.o
+ .debug_info    0x000023a7       0x9e main.o
+ .debug_info    0x00002445      0x1f3 MCAL/dio/dio.o
 
 .debug_abbrev   0x00000000      0xd63
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_abbrev  0x000004a3      0x266 APP/app.o
- .debug_abbrev  0x00000709       0xec HAL/buzzer/buzzer.o
- .debug_abbrev  0x000007f5      0x125 HAL/keypad/keypad.o
- .debug_abbrev  0x0000091a      0x20c HAL/lcd/lcd.o
- .debug_abbrev  0x00000b26       0x89 HAL/temp_sensor/temp_sensor.o
+ .debug_abbrev  0x000004a3      0x257 APP/app.o
+ .debug_abbrev  0x000006fa       0xec HAL/buzzer/buzzer.o
+ .debug_abbrev  0x000007e6      0x125 HAL/keypad/keypad.o
+ .debug_abbrev  0x0000090b      0x20c HAL/lcd/lcd.o
+ .debug_abbrev  0x00000b17       0x98 HAL/temp_sensor/temp_sensor.o
  .debug_abbrev  0x00000baf       0xaa HAL/timer_manager/timer_manager.o
  .debug_abbrev  0x00000c59       0x65 main.o
  .debug_abbrev  0x00000cbe       0xa5 MCAL/dio/dio.o
 
-.debug_line     0x00000000     0x1354
+.debug_line     0x00000000     0x135b
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_line    0x00000116      0x604 APP/app.o
- .debug_line    0x0000071a      0x179 HAL/buzzer/buzzer.o
- .debug_line    0x00000893      0x1f3 HAL/keypad/keypad.o
- .debug_line    0x00000a86      0x42e HAL/lcd/lcd.o
- .debug_line    0x00000eb4       0xdd HAL/temp_sensor/temp_sensor.o
- .debug_line    0x00000f91      0x133 HAL/timer_manager/timer_manager.o
- .debug_line    0x000010c4       0x57 main.o
- .debug_line    0x0000111b      0x239 MCAL/dio/dio.o
+ .debug_line    0x00000116      0x60b APP/app.o
+ .debug_line    0x00000721      0x179 HAL/buzzer/buzzer.o
+ .debug_line    0x0000089a      0x1f3 HAL/keypad/keypad.o
+ .debug_line    0x00000a8d      0x42e HAL/lcd/lcd.o
+ .debug_line    0x00000ebb       0xdd HAL/temp_sensor/temp_sensor.o
+ .debug_line    0x00000f98      0x133 HAL/timer_manager/timer_manager.o
+ .debug_line    0x000010cb       0x57 main.o
+ .debug_line    0x00001122      0x239 MCAL/dio/dio.o
 
 .debug_frame    0x00000000      0x358
  *(.debug_frame)
@@ -773,15 +777,15 @@ END GROUP
 .debug_str      0x00000000      0xa7c
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_str     0x00000196      0x68c APP/app.o
-                                0x6ca (size before relaxing)
- .debug_str     0x00000822       0xa1 HAL/buzzer/buzzer.o
+ .debug_str     0x00000196      0x69d APP/app.o
+                                0x6db (size before relaxing)
+ .debug_str     0x00000833       0xa1 HAL/buzzer/buzzer.o
                                 0x28f (size before relaxing)
- .debug_str     0x000008c3       0x5c HAL/keypad/keypad.o
+ .debug_str     0x000008d4       0x5c HAL/keypad/keypad.o
                                 0x2c8 (size before relaxing)
- .debug_str     0x0000091f       0x6c HAL/lcd/lcd.o
+ .debug_str     0x00000930       0x6c HAL/lcd/lcd.o
                                 0x39e (size before relaxing)
- .debug_str     0x0000098b       0x4d HAL/temp_sensor/temp_sensor.o
+ .debug_str     0x0000099c       0x3c HAL/temp_sensor/temp_sensor.o
                                 0x24e (size before relaxing)
  .debug_str     0x000009d8       0x71 HAL/timer_manager/timer_manager.o
                                 0x2e8 (size before relaxing)
@@ -790,15 +794,15 @@ END GROUP
  .debug_str     0x00000a5a       0x22 MCAL/dio/dio.o
                                 0x275 (size before relaxing)
 
-.debug_loc      0x00000000      0xebc
+.debug_loc      0x00000000      0xec0
  *(.debug_loc)
- .debug_loc     0x00000000      0x2d9 APP/app.o
- .debug_loc     0x000002d9       0x88 HAL/buzzer/buzzer.o
- .debug_loc     0x00000361      0x1c7 HAL/keypad/keypad.o
- .debug_loc     0x00000528      0x600 HAL/lcd/lcd.o
- .debug_loc     0x00000b28       0x4c HAL/temp_sensor/temp_sensor.o
- .debug_loc     0x00000b74       0x93 HAL/timer_manager/timer_manager.o
- .debug_loc     0x00000c07      0x2b5 MCAL/dio/dio.o
+ .debug_loc     0x00000000      0x2dd APP/app.o
+ .debug_loc     0x000002dd       0x88 HAL/buzzer/buzzer.o
+ .debug_loc     0x00000365      0x1c7 HAL/keypad/keypad.o
+ .debug_loc     0x0000052c      0x600 HAL/lcd/lcd.o
+ .debug_loc     0x00000b2c       0x4c HAL/temp_sensor/temp_sensor.o
+ .debug_loc     0x00000b78       0x93 HAL/timer_manager/timer_manager.o
+ .debug_loc     0x00000c0b      0x2b5 MCAL/dio/dio.o
 
 .debug_macinfo
  *(.debug_macinfo)

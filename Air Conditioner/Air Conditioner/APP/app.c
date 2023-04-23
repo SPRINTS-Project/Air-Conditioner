@@ -203,8 +203,13 @@ void APP_working(void)
 	
 	while(u8_en_gs_programState == APP_WORKING)
 	{
+		// read the temp from the sensor
+		TEMP_SENSOR_read(&st_gs_tempSensorConfig,&u8_gs_curTemp);
+		
 		// convert int to string
 		itoa(u8_gs_curTemp,ch_arrs_curTempToString,10);
+		
+		
 		LCD_setCursor(2,2);
 		LCD_writeString((uint8_t*)ch_arrs_curTempToString);
 		if (u8_gs_curTemp > u8_gs_programTemp)
@@ -257,7 +262,7 @@ void APP_working(void)
 				break;
 			default:
 				
-				PORTD = u8_keypadData;
+				//PORTD = u8_keypadData;
 				// Invalid button
 				LCD_clear();
 				LCD_setCursor(1,1);

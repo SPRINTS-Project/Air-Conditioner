@@ -29,6 +29,6 @@ typedef uint8_t u8_en_tempSensorErrorsType;
 
 u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config);
 
-u8_en_tempSensorErrorsType TEMP_SENSOR_read (uint8_t * u8_data);
+u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config,uint8_t * u8_data);
 
 #endif /*	TEMP_SENSOR_H	*/
