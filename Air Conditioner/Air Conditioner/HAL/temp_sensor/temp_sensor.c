@@ -2,8 +2,8 @@
  * temp_sensor.c
  *
  * Created: 4/21/2023 12:27:22 AM
- *  Author: Mahmoud Sarhan
- *	EMAIL : Eng.mahmoud.adel94@gmail.com
+ *  Author: Mohamed Abdel-Wahab
+ *	EMAIL : mohamedhegay22@gmail.com
  */ 
 
 

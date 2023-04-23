@@ -53,10 +53,11 @@ void APP_init(void)
 {
 	// Initialize timer 0 in Normal mode with OVF interrupt enabled and interrupt period every 0.5 ms
 	st_gs_timer_0_config.u8_timerNum = TIMER_0;
-	st_gs_timer_0_config.u8_timer_ovf_int_enable = 1;
+	st_gs_timer_0_config.u8_timer_ovf_int_enable = TIMER_INTERRUPT_FEATURE_ENABLE;
 	st_gs_timer_0_config.u16_timer_InitialValue = APP_TIMER_0_INIT_VALUE;
 	st_gs_timer_0_config.callBackFunction =  APP_timer0OvfHandeler;
 	TIMER_Manager_init(&st_gs_timer_0_config);
+	TIMER_Manager_start(&st_gs_timer_0_config);
 	
 	// Initialize The Temp. sensor 
 	st_gs_tempSensorConfig.u8_channel = ADC_CHANNEL_7;

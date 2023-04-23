@@ -2,8 +2,8 @@
  * temp_sensor.h
  *
  * Created: 4/21/2023 12:27:22 AM
- *  Author: Mahmoud Sarhan
- *	EMAIL : Eng.mahmoud.adel94@gmail.com
+ *  Author: Mohamed Abdel-Wahab
+ *	EMAIL : mohamedhegay22@gmail.com
  */ 
 
 
@@ -26,9 +26,21 @@ typedef uint8_t u8_en_tempSensorErrorsType;
 #define TEMP_E_NOT_OK			((u8_en_tempSensorErrorsType)0x08)
 
 
-
+/*
+* Description : initialize the sensor & adc channel
+* @param A Reference of the Temperature sensor's configuration structure
+* @return Std_ReturnType: status of the function
+* TEMP_E_OK :the function done successfully
+* TEMP_E_NOT_OK :the function has issues performing the function
+*/
 u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config);
-
+/*
+* Description :Get the Degree in Celsius 
+* @param A Reference of return data
+* @return Std_ReturnType: status of the function
+* TEMP_E_OK :the function done successfully
+* TEMP_E_NOT_OK :the function has issues performing the function
+*/
 u8_en_tempSensorErrorsType TEMP_SENSOR_read (uint8_t * u8_data);
 
 #endif /*	TEMP_SENSOR_H	*/
