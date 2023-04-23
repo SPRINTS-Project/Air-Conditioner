@@ -58,10 +58,8 @@ u8_en_lcdErrorsType LCD_clear (void);
 u8_en_lcdErrorsType LCD_setCursor (uint8_t u8_row,uint8_t u8_col);
 u8_en_lcdErrorsType LCD_writeString (uint8_t* u8_data);
 u8_en_lcdErrorsType LCD_writeSpChar (u8_en_lcdSpCharType u8_SpChar);
-<<<<<<< HEAD
 
-=======
+/*
 void ENABLE(void);
->>>>>>> 4a7be62bab9081be2338ad4a12499a883688378d
-
+*/
 #endif /* KEYPAD_H	*/

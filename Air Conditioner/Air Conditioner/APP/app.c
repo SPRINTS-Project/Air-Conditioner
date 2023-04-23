@@ -7,7 +7,7 @@
  */ 
 
 #include "app.h"
-
+#include <avr/io.h>
 
 static st_timerConfigType st_gs_timer_0_config;
 static st_tempSensorConfigType st_gs_tempSensorConfig;
@@ -17,7 +17,7 @@ static st_buzzerConfigType st_gs_buzzerConfig;
 static u8_programStateType u8_en_gs_programState = APP_WELCOME;
 static uint8_t u8_delay = 0;
 const uint8_t u8_gc_defaultTemp = 20;
-static uint8_t u8_gs_curTemp = 0;
+static uint8_t u8_gs_curTemp = 20;
 static uint8_t u8_gs_programTemp = 0;
 
 
@@ -155,8 +155,10 @@ void APP_set(void)
 		LCD_setCursor(1,8);
 		LCD_writeString((uint8_t*)ch_arrs_curTempToString);
 		KEYPAD_read(&u8_keypadData);
+		
 		if (u8_keypadData == '1')
 		{
+		
 			// Increment
 			if (u8_gs_programTemp < 35)
 			{
@@ -199,66 +201,81 @@ void APP_working(void)
 	LCD_writeString((uint8_t*)"Current Temp = ");
 	
 	
-	while(1)
+	while(u8_en_gs_programState == APP_WORKING)
 	{
 		// convert int to string
 		itoa(u8_gs_curTemp,ch_arrs_curTempToString,10);
-		LCD_setCursor(2,1);
+		LCD_setCursor(2,2);
 		LCD_writeString((uint8_t*)ch_arrs_curTempToString);
 		if (u8_gs_curTemp > u8_gs_programTemp)
-	{
-		// print the bell shape 
-		LCD_writeSpChar(LCD_BELL);
-		
-		
-		// start the BUZZER
-		BUZZER_start();
-	}
-	KEYPAD_read(&u8_keypadData);
-	if (u8_keypadData == '5')
-	{
-		// reset
-		
-		// Stop the BUZZER
-		BUZZER_stop();
-		
-		// Set the program temp with the default temp
-		u8_gs_programTemp = u8_gc_defaultTemp;
-		
-		// clear LCD and print Temp value is resettled to 20
-		LCD_clear();
-		LCD_setCursor(1,1);
-		LCD_writeString((uint8_t*)"Temp value is resettled to 20");
-		
-		// 1s timeout
-		u8_delay = 0;
-		while(u8_delay <= 2);
-		
-		// change the program state
-		u8_en_gs_programState = APP_SET_TEMP;
-	}
-	else if (u8_keypadData == '4')
-	{
-		// adjust
-		
-		// Stop the BUZZER
-		BUZZER_stop();
-		
-		// change the program state
-		u8_en_gs_programState = APP_SET_TEMP;
-		break;
-	}
-	else{
-		
-		// Invalid button
-		/*LCD_clear();
-		LCD_setCursor(1,1);
-		LCD_writeString((uint8_t*)"the operation is not allowed");*/
-		
-		// 1s timeout
-		//u8_delay = 0;
-		//while(u8_delay <= 2);
-	}
+		{
+			// print the bell shape 
+			//LCD_setCursor(2,3);
+			LCD_writeSpChar(LCD_BELL);
+			
+			
+			// start the BUZZER
+			BUZZER_start();
+		}
+		KEYPAD_read(&u8_keypadData);
+		switch(u8_keypadData)
+		{
+			case  78 :
+				break;
+			case  APP_RESET_BTN :
+				// reset
+				// Stop the BUZZER
+				BUZZER_stop();
+				
+				// Set the program temp with the default temp
+				u8_gs_programTemp = u8_gc_defaultTemp;
+				
+				// clear LCD and print Temp value is resettled to 20
+				LCD_clear();
+				LCD_setCursor(1,1);
+				LCD_writeString((uint8_t*)"Temp value is");
+				LCD_setCursor(2,1);
+				LCD_writeString((uint8_t*)"resettled to 20");
+				
+				// 1s timeout
+				u8_delay = 0;
+				//while(u8_delay <= 2);
+				_delay_ms(1000);
+				
+				// change the program state
+				u8_en_gs_programState = APP_SET_TEMP;
+				break;
+			
+			case APP_ADJUST_BTN : 
+				// adjust
+				
+				// Stop the BUZZER
+				BUZZER_stop();
+				
+				// change the program state
+				u8_en_gs_programState = APP_SET_TEMP;
+				break;
+			default:
+				
+				PORTD = u8_keypadData;
+				// Invalid button
+				LCD_clear();
+				LCD_setCursor(1,1);
+				LCD_writeString((uint8_t*)"the operation is");
+				LCD_setCursor(2,1);
+				LCD_writeString((uint8_t*)"not allowed");
+			
+				// 1s timeout
+				//u8_delay = 0;
+				//while(u8_delay <= 2);
+				_delay_ms(1000);
+				
+				// print current temp
+				LCD_clear();
+				LCD_setCursor(1,1);
+				LCD_writeString((uint8_t*)"Current Temp = ");
+				break;
+		}
 	}
 	
 }

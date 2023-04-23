@@ -21,6 +21,11 @@
 
 
 #define APP_TIMER_0_INIT_VALUE		240
+#define APP_RESET_BTN				'5'
+#define APP_ADJUST_BTN				'4'
+#define APP_INCREMENT_BTN			'1'
+#define APP_DECREMENT_BTN			'2'
+#define APP_SET_BTN					'3'
 
 typedef uint8_t u8_programStateType;
 
