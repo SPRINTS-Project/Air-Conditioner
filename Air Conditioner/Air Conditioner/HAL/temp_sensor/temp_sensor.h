@@ -42,11 +42,11 @@ typedef uint8_t u8_en_tempSensorErrorsType;
 u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config);
 /*
 * Description :Get the Degree in Celsius 
-* @param A Reference of return data
+* @param A Reference of return data &  A Reference of the Temperature sensor's configuration structure
 * @return Std_ReturnType: status of the function
 * TEMP_E_OK :the function done successfully
 * TEMP_E_NOT_OK :the function has issues performing the function
 */
-u8_en_tempSensorErrorsType TEMP_SENSOR_read (uint8_t * u8_data);
+u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config , uint8_t * u8_data);
 
 #endif /*	TEMP_SENSOR_H	*/
