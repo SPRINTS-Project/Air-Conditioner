@@ -26,6 +26,11 @@
 #define APP_INCREMENT_BTN			'1'
 #define APP_DECREMENT_BTN			'2'
 #define APP_SET_BTN					'3'
+#define APP_NO_BTN					78
+
+
+#define APP_PORT					0
+#define APP_PIN						1
 
 typedef uint8_t u8_programStateType;
 

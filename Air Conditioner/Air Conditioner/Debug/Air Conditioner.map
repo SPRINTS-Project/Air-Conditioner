@@ -727,17 +727,17 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x2638
+.debug_info     0x00000000     0x2639
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_info    0x000004e6      0xca6 APP/app.o
- .debug_info    0x0000118c      0x1b3 HAL/buzzer/buzzer.o
- .debug_info    0x0000133f      0x38f HAL/keypad/keypad.o
- .debug_info    0x000016ce      0x9e9 HAL/lcd/lcd.o
- .debug_info    0x000020b7      0x130 HAL/temp_sensor/temp_sensor.o
- .debug_info    0x000021e7      0x1c0 HAL/timer_manager/timer_manager.o
- .debug_info    0x000023a7       0x9e main.o
- .debug_info    0x00002445      0x1f3 MCAL/dio/dio.o
+ .debug_info    0x000004e6      0xca7 APP/app.o
+ .debug_info    0x0000118d      0x1b3 HAL/buzzer/buzzer.o
+ .debug_info    0x00001340      0x38f HAL/keypad/keypad.o
+ .debug_info    0x000016cf      0x9e9 HAL/lcd/lcd.o
+ .debug_info    0x000020b8      0x130 HAL/temp_sensor/temp_sensor.o
+ .debug_info    0x000021e8      0x1c0 HAL/timer_manager/timer_manager.o
+ .debug_info    0x000023a8       0x9e main.o
+ .debug_info    0x00002446      0x1f3 MCAL/dio/dio.o
 
 .debug_abbrev   0x00000000      0xd63
  *(.debug_abbrev)
@@ -751,17 +751,17 @@ END GROUP
  .debug_abbrev  0x00000c59       0x65 main.o
  .debug_abbrev  0x00000cbe       0xa5 MCAL/dio/dio.o
 
-.debug_line     0x00000000     0x135b
+.debug_line     0x00000000     0x1359
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_line    0x00000116      0x60b APP/app.o
- .debug_line    0x00000721      0x179 HAL/buzzer/buzzer.o
- .debug_line    0x0000089a      0x1f3 HAL/keypad/keypad.o
- .debug_line    0x00000a8d      0x42e HAL/lcd/lcd.o
- .debug_line    0x00000ebb       0xdd HAL/temp_sensor/temp_sensor.o
- .debug_line    0x00000f98      0x133 HAL/timer_manager/timer_manager.o
- .debug_line    0x000010cb       0x57 main.o
- .debug_line    0x00001122      0x239 MCAL/dio/dio.o
+ .debug_line    0x00000116      0x609 APP/app.o
+ .debug_line    0x0000071f      0x179 HAL/buzzer/buzzer.o
+ .debug_line    0x00000898      0x1f3 HAL/keypad/keypad.o
+ .debug_line    0x00000a8b      0x42e HAL/lcd/lcd.o
+ .debug_line    0x00000eb9       0xdd HAL/temp_sensor/temp_sensor.o
+ .debug_line    0x00000f96      0x133 HAL/timer_manager/timer_manager.o
+ .debug_line    0x000010c9       0x57 main.o
+ .debug_line    0x00001120      0x239 MCAL/dio/dio.o
 
 .debug_frame    0x00000000      0x358
  *(.debug_frame)

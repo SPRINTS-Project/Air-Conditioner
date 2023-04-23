@@ -64,39 +64,61 @@ void APP_init(void)
 	st_gs_tempSensorConfig.u8_prescaler_selection = ADC_PRESCALER_2;
 	TEMP_SENSOR_init(&st_gs_tempSensorConfig);
 	
+	
+	
+	
 	// Initialize the LCD
 	st_gs_lcdConfig.u8_mode = LCD_4_BIT_MODE;
-	st_gs_lcdConfig.u8_d4Pin[0] = porta;
-	st_gs_lcdConfig.u8_d4Pin[1] = pin0;
-	st_gs_lcdConfig.u8_d5Pin[0] = porta;
-	st_gs_lcdConfig.u8_d5Pin[1] = pin1;
-	st_gs_lcdConfig.u8_d6Pin[0] = porta;
-	st_gs_lcdConfig.u8_d6Pin[1] = pin2;
-	st_gs_lcdConfig.u8_d7Pin[0] = porta;
-	st_gs_lcdConfig.u8_d7Pin[1] = pin3;
-	st_gs_lcdConfig.u8_RSpin[0] = porta;
-	st_gs_lcdConfig.u8_RSpin[1] = pin4;
-	st_gs_lcdConfig.u8_RWpin[0] = porta;
-	st_gs_lcdConfig.u8_RWpin[1] = pin5;
-	st_gs_lcdConfig.u8_Epin[0] = porta;
-	st_gs_lcdConfig.u8_Epin[1] = pin6;
+	
+	st_gs_lcdConfig.u8_d4Pin[APP_PORT]	 = porta;
+	st_gs_lcdConfig.u8_d4Pin[APP_PIN]	 = pin0;
+	
+	st_gs_lcdConfig.u8_d5Pin[APP_PORT]	 = porta;
+	st_gs_lcdConfig.u8_d5Pin[APP_PIN]	 = pin1;
+	
+	st_gs_lcdConfig.u8_d6Pin[APP_PORT]	 = porta;
+	st_gs_lcdConfig.u8_d6Pin[APP_PIN]	 = pin2;
+	
+	st_gs_lcdConfig.u8_d7Pin[APP_PORT]	 = porta;
+	st_gs_lcdConfig.u8_d7Pin[APP_PIN]	 = pin3;
+	
+	st_gs_lcdConfig.u8_RSpin[APP_PORT]	 = porta;
+	st_gs_lcdConfig.u8_RSpin[APP_PIN]	 = pin4;
+	
+	st_gs_lcdConfig.u8_RWpin[APP_PORT]	 = porta;
+	st_gs_lcdConfig.u8_RWpin[APP_PIN]	 = pin5;
+	
+	st_gs_lcdConfig.u8_Epin[APP_PORT]	 = porta;
+	st_gs_lcdConfig.u8_Epin[APP_PIN]	 = pin6;
+	
 	LCD_init(&st_gs_lcdConfig);
 	
+	
+	
+	
+	
 	// Initialize the keypad
-	st_gs_keypadConfig.u8_col1Pin[0] = portc;
-	st_gs_keypadConfig.u8_col1Pin[1] = pin3;
-	st_gs_keypadConfig.u8_col2Pin[0] = portc;
-	st_gs_keypadConfig.u8_col2Pin[1] = pin4;
-	st_gs_keypadConfig.u8_col3Pin[0] = portc;
-	st_gs_keypadConfig.u8_col3Pin[1] = pin5;
-	st_gs_keypadConfig.u8_col4Pin[0] = portc;
-	st_gs_keypadConfig.u8_col4Pin[1] = pin6;
-	st_gs_keypadConfig.u8_row1Pin[0] = portc;
-	st_gs_keypadConfig.u8_row1Pin[1] = pin0 ;
-	st_gs_keypadConfig.u8_row2Pin[0] = portc;
-	st_gs_keypadConfig.u8_row2Pin[1] = pin1 ;
-	st_gs_keypadConfig.u8_row3Pin[0] = portc;
-	st_gs_keypadConfig.u8_row3Pin[1] = pin2 ;
+	st_gs_keypadConfig.u8_col1Pin[APP_PORT]	 = portc;
+	st_gs_keypadConfig.u8_col1Pin[APP_PIN]	 = pin3;
+	
+	st_gs_keypadConfig.u8_col2Pin[APP_PORT]	 = portc;
+	st_gs_keypadConfig.u8_col2Pin[APP_PIN]	 = pin4;
+	
+	st_gs_keypadConfig.u8_col3Pin[APP_PORT]  = portc;
+	st_gs_keypadConfig.u8_col3Pin[APP_PIN]	 = pin5;
+	
+	st_gs_keypadConfig.u8_col4Pin[APP_PORT]	 = portc;
+	st_gs_keypadConfig.u8_col4Pin[APP_PIN]	 = pin6;
+	
+	st_gs_keypadConfig.u8_row1Pin[APP_PORT]	 = portc;
+	st_gs_keypadConfig.u8_row1Pin[APP_PIN]	 = pin0 ;
+	
+	st_gs_keypadConfig.u8_row2Pin[APP_PORT]  = portc;
+	st_gs_keypadConfig.u8_row2Pin[APP_PIN]	 = pin1 ;
+	
+	st_gs_keypadConfig.u8_row3Pin[APP_PORT]	 = portc;
+	st_gs_keypadConfig.u8_row3Pin[APP_PIN]	 = pin2 ;
+	
 	KEYPAD_init(&st_gs_keypadConfig);
 	
 	
@@ -156,7 +178,7 @@ void APP_set(void)
 		LCD_writeString((uint8_t*)ch_arrs_curTempToString);
 		KEYPAD_read(&u8_keypadData);
 		
-		if (u8_keypadData == '1')
+		if (u8_keypadData == APP_INCREMENT_BTN)
 		{
 		
 			// Increment
@@ -165,7 +187,7 @@ void APP_set(void)
 				u8_gs_programTemp++;
 			}
 		}
-		else if (u8_keypadData == '2')
+		else if (u8_keypadData == APP_DECREMENT_BTN)
 		{
 			// Decrement
 			if (u8_gs_programTemp >18)
@@ -173,7 +195,7 @@ void APP_set(void)
 				u8_gs_programTemp--;
 			}
 		}
-		else if (u8_keypadData == '3')
+		else if (u8_keypadData == APP_SET_BTN)
 		{
 			// Set
 			u8_en_gs_programState = APP_WORKING;
@@ -225,7 +247,7 @@ void APP_working(void)
 		KEYPAD_read(&u8_keypadData);
 		switch(u8_keypadData)
 		{
-			case  78 :
+			case  APP_NO_BTN :
 				break;
 			case  APP_RESET_BTN :
 				// reset
@@ -262,7 +284,6 @@ void APP_working(void)
 				break;
 			default:
 				
-				//PORTD = u8_keypadData;
 				// Invalid button
 				LCD_clear();
 				LCD_setCursor(1,1);
