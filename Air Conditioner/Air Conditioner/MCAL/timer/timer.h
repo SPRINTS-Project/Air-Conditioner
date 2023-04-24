@@ -47,7 +47,7 @@ u8_en_timerErrorsType TIMER_start (st_timerConfigType* st_config);
 u8_en_timerErrorsType TIMER_stop (u8_en_timerNumberType u8_a_timerNum);
 
 /*
-* Description :Function to make the timer to start again from beginning(reset)
+* Description :Function to make the timer to start again from the initial value (reset)
 * @param A Reference of the Timer configuration
 * @return status of the function
 * TIMER_E_OK :the function done successfully
