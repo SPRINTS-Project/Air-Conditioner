@@ -10,6 +10,9 @@
 #ifndef ADC_H_
 #define ADC_H_
 
+#define F_CPU 8000000UL
+
+#include <util/delay.h>
 
 #include "adc_types.h"
 #include "adc_config.h"
@@ -62,7 +65,7 @@ u8_en_adcErrorsType ADC_init (st_adcConfigType* st_config);
 *-1- (E_NOK) if there is something wrong
 *-2- (E_OK) otherwise
 */
-u8_en_adcErrorsType ADC_read (u8_en_adcChannelId u8_channelID,double * u16_data);
+u8_en_adcErrorsType ADC_read (u8_en_adcChannelId u8_channelID,uint16_t * u16_data);
 
 
 #endif	/*	ADC_H_	*/

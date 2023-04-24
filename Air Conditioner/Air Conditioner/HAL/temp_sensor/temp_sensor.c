@@ -75,7 +75,8 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
 		}
 		else
 		{
-			l_adc_ret = ADC_E_NOT_OK;
+			//l_adc_ret = ADC_E_NOT_OK;
+			return l_adc_ret;
 		}
 		
 		/*get the ADC digital value in analog voltage(DAC) then in temperature degree*/
