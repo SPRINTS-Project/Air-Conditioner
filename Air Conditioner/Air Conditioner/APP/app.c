@@ -57,7 +57,7 @@ void APP_init(void)
 	st_gs_timer_0_config.u16_timer_InitialValue = APP_TIMER_0_INIT_VALUE;
 	st_gs_timer_0_config.callBackFunction =  APP_timer0OvfHandeler;
 	TIMER_Manager_init(&st_gs_timer_0_config);
-	TIMER_Manager_start(&st_gs_timer_0_config);
+	
 	
 	// Initialize The Temp. sensor 
 	st_gs_tempSensorConfig.u8_channel = ADC_CHANNEL_7;
