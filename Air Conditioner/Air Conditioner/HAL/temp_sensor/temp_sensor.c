@@ -46,7 +46,7 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
 {
 	u8_en_tempSensorErrorsType l_TempSensor_ret = TEMP_E_OK;
 	u8_en_adcErrorsType l_adc_ret = ADC_E_OK;
-	double f64_l_readTemp_ADC = 0.0;
+	uint16_t f64_l_readTemp_ADC = 0;
 	double f64_l_stepSize = 0.0;
 	
 	if(NULL== u8_data || NULL==st_config || st_config->u8_channel >= ADC_INVALID_CHANNEL || st_config->u8_prescaler_selection >= ADC_INVALID_PRESCALER)
@@ -57,6 +57,7 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
 	{
 		
 		l_adc_ret = ADC_read(st_config->u8_channel,&f64_l_readTemp_ADC);
+		
 		if(ADC_E_OK==l_adc_ret)
 		{
 			if( ADC_INTERNAL_2_56V_REF == st_config->u8_ref_selection)
@@ -69,25 +70,23 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
 			}
 			else
 			{
-				/*l_adc_ret = ADC_E_NOT_OK;*/
 				//do nothing
 			}			
 		}
 		else
 		{
-			//l_adc_ret = ADC_E_NOT_OK;
-			return l_adc_ret;
+			l_TempSensor_ret = l_adc_ret;
 		}
 		
 		/*get the ADC digital value in analog voltage(DAC) then in temperature degree*/
-		if(((uint32_t)l_adc_ret * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR) >= MAX_TEMPERATURE_SENSOR_VALUE)
+		if((((double)f64_l_readTemp_ADC )* f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR) >= MAX_TEMPERATURE_SENSOR_VALUE)
 		{
 			// if temperature more than maximum ,will saturate at maximum possible temperature the sensor can measure 
 			*u8_data = MAX_TEMPERATURE_SENSOR_VALUE ;
 		}
 		else
 		{
-			*u8_data = (uint8_t)((uint32_t)l_adc_ret * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
+			*u8_data = (uint8_t)(((double)f64_l_readTemp_ADC) * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
 		}
 		
 	}

@@ -15,7 +15,7 @@
 #define ADC_MAX_RESOLUTION		   		 1024
 #define  AVCC_VOLTAGE					 5.0
 #define  INTERNAL_VOLTAGE				 2.56
-#define MAX_TEMPERATURE_SENSOR_VALUE     150
+#define MAX_TEMPERATURE_SENSOR_VALUE     99
 /*max sensor temperature (150)/ max sensor voltage (1.5) */
 #define  VOLTAGE_TO_CELSUIS_FACTOR		 100	
 
