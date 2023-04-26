@@ -30,6 +30,7 @@ void APP_timer0OvfHandeler(void);
 
 void APP_start(void)
 {
+	DDRD = 0xff;
 	APP_init();
 	while(1)
 	{
@@ -227,7 +228,8 @@ void APP_working(void)
 	while(u8_en_gs_programState == APP_WORKING)
 	{
 		// read the temp from the sensor
-		TEMP_SENSOR_read(&st_gs_tempSensorConfig,&u8_gs_curTemp);
+		PORTD = TEMP_SENSOR_read(&st_gs_tempSensorConfig,&u8_gs_curTemp);
+		
 		
 		// convert int to string
 		itoa(u8_gs_curTemp,ch_arrs_curTempToString,10);

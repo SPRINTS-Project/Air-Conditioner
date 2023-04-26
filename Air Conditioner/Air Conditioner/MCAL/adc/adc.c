@@ -31,26 +31,28 @@ u8_en_adcErrorsType ADC_init (st_adcConfigType* st_config)
 	return ret;
 	
 }
-u8_en_adcErrorsType ADC_read (u8_en_adcChannelId u8_channelID, double * u16_data)
+u8_en_adcErrorsType ADC_read (u8_en_adcChannelId u8_channelID, uint16_t * u16_data)
 {
 	u8_en_adcErrorsType ret = ADC_E_OK;
 	if(u8_channelID < ADC_CHANNEL_0 || u8_channelID > ADC_CHANNEL_7 || u16_data == NULL){
 		ret =	ADC_E_NOT_OK;
 	}
 	else{
-		if(((DDRD & (1U<<u8_channelID))>>u8_channelID) != 0){
+		if(((DDRA & (1U<<u8_channelID))>>u8_channelID) != 0)
+		{
 			DIO_init (porta, u8_channelID, STD_INPUT);
 		}
 		
 		while(READ_BIT(ADCSRA_ADD, ADC_START_CONVERSION) == 1);
 		
-		ADMUX_ADD  = (0xE0 & ADMUX_ADD) | u8_channelID;
+		ADMUX_ADD  = (0xf8 & ADMUX_ADD) | u8_channelID;
 		SET_BIT(ADCSRA_ADD, ADC_START_CONVERSION);
+		_delay_ms(10);
 		while(READ_BIT(ADCSRA_ADD, ADC_INT_FLAG) == 0);
 		uint16_t	adc_data_temp=0;	
 		adc_data_temp = ADCL_ADD;
 		adc_data_temp |=(ADCH_ADD<<8);
-		*u16_data  = (Quantisation_step*adc_data_temp);
+		*u16_data  = adc_data_temp;
 	}
 	
 	return ret;
