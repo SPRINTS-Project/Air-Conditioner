@@ -49,6 +49,7 @@ typedef uint8_t u8_en_adcChannelId;
 #define ADC_CHANNEL_5				((u8_en_adcChannelId)0x05)
 #define ADC_CHANNEL_6				((u8_en_adcChannelId)0x06)
 #define ADC_CHANNEL_7				((u8_en_adcChannelId)0x07)
+#define ADC_INVALID_CHANNEL			((u8_en_adcChannelId)0x08)
 
 
 
@@ -70,7 +71,7 @@ typedef uint8_t u8_en_adcPrescalerType;
 #define ADC_PRESCALER_32					((u8_en_adcPrescalerType)0x05)
 #define ADC_PRESCALER_64					((u8_en_adcPrescalerType)0x06)
 #define ADC_PRESCALER_128					((u8_en_adcPrescalerType)0x07)
-
+#define ADC_INVALID_PRESCALER				((u8_en_adcPrescalerType)0x08)
 
 
 /**configuration of  ADC**/
