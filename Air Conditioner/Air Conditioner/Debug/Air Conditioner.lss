@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000580  00000000  00000000  00007990  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000c8d  00000000  00000000  00007f10  2**0
+ 10 .debug_str    00000ce1  00000000  00000000  00007f10  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00001bb1  00000000  00000000  00008b9d  2**0
+ 11 .debug_loc    00001bb1  00000000  00000000  00008bf1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000001c0  00000000  00000000  0000a74e  2**0
+ 12 .debug_ranges 000001c0  00000000  00000000  0000a7a2  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -965,238 +965,116 @@ void APP_start(void)
      530:	ed cf       	rjmp	.-38     	; 0x50c <APP_start+0x14>
 
 00000532 <BUZZER_init>:
-static uint8_t u8_gs_buzzerState = NOT_INIT;
-
-
-
-u8_en_buzzerErrorsType BUZZER_init (st_buzzerConfigType* st_config)
-{
      532:	cf 93       	push	r28
      534:	df 93       	push	r29
-	// Check if the pounter is invalid
-	if (st_config == ((void*)0))
      536:	00 97       	sbiw	r24, 0x00	; 0
      538:	99 f0       	breq	.+38     	; 0x560 <BUZZER_init+0x2e>
      53a:	ec 01       	movw	r28, r24
-		return BUZZER_E_NOT_OK;
-	
-	// Set Buzzer pin as output
-	u8_en_dioErrors u8_dioRetVal = DIO_init(st_config->u8_port, st_config->u8_pin, STD_OUTPUT);
      53c:	68 81       	ld	r22, Y
      53e:	41 e0       	ldi	r20, 0x01	; 1
      540:	89 81       	ldd	r24, Y+1	; 0x01
      542:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-	
-	// Check if there is an error from dio driver
-	if(u8_dioRetVal)
      546:	81 11       	cpse	r24, r1
      548:	0c c0       	rjmp	.+24     	; 0x562 <BUZZER_init+0x30>
-		return u8_dioRetVal;
-	
-	// Store configuration locally
-	st_gs_buzzerConfig.u8_port = st_config->u8_port;
      54a:	89 81       	ldd	r24, Y+1	; 0x01
      54c:	ea e0       	ldi	r30, 0x0A	; 10
      54e:	f1 e0       	ldi	r31, 0x01	; 1
      550:	81 83       	std	Z+1, r24	; 0x01
-	st_gs_buzzerConfig.u8_pin = st_config->u8_pin;
      552:	88 81       	ld	r24, Y
      554:	80 83       	st	Z, r24
-	
-	// Change buzzer state
-	u8_gs_buzzerState = INIT;
      556:	81 e0       	ldi	r24, 0x01	; 1
      558:	80 93 09 01 	sts	0x0109, r24	; 0x800109 <u8_gs_buzzerState>
-	
-	return BUZZER_E_OK;
      55c:	80 e0       	ldi	r24, 0x00	; 0
      55e:	01 c0       	rjmp	.+2      	; 0x562 <BUZZER_init+0x30>
-
-u8_en_buzzerErrorsType BUZZER_init (st_buzzerConfigType* st_config)
-{
-	// Check if the pounter is invalid
-	if (st_config == ((void*)0))
-		return BUZZER_E_NOT_OK;
      560:	86 e0       	ldi	r24, 0x06	; 6
-	
-	// Change buzzer state
-	u8_gs_buzzerState = INIT;
-	
-	return BUZZER_E_OK;
-}
      562:	df 91       	pop	r29
      564:	cf 91       	pop	r28
      566:	08 95       	ret
 
 00000568 <BUZZER_start>:
-u8_en_buzzerErrorsType BUZZER_start(void)
-{
-	// Check if the module is not init before
-	if(u8_gs_buzzerState == NOT_INIT)
      568:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <u8_gs_buzzerState>
      56c:	88 23       	and	r24, r24
      56e:	49 f0       	breq	.+18     	; 0x582 <BUZZER_start+0x1a>
-		return BUZZER_E_NOT_OK;
-	
-	// Turn the buzzer on
-	DIO_writePIN(st_gs_buzzerConfig.u8_port,st_gs_buzzerConfig.u8_pin, STD_HIGH);
      570:	ea e0       	ldi	r30, 0x0A	; 10
      572:	f1 e0       	ldi	r31, 0x01	; 1
      574:	60 81       	ld	r22, Z
      576:	41 e0       	ldi	r20, 0x01	; 1
      578:	81 81       	ldd	r24, Z+1	; 0x01
      57a:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-	
-	return BUZZER_E_OK;
      57e:	80 e0       	ldi	r24, 0x00	; 0
      580:	08 95       	ret
-}
-u8_en_buzzerErrorsType BUZZER_start(void)
-{
-	// Check if the module is not init before
-	if(u8_gs_buzzerState == NOT_INIT)
-		return BUZZER_E_NOT_OK;
      582:	86 e0       	ldi	r24, 0x06	; 6
-	
-	// Turn the buzzer on
-	DIO_writePIN(st_gs_buzzerConfig.u8_port,st_gs_buzzerConfig.u8_pin, STD_HIGH);
-	
-	return BUZZER_E_OK;
-}
      584:	08 95       	ret
 
 00000586 <BUZZER_stop>:
-u8_en_buzzerErrorsType BUZZER_stop(void)
-{
-	// Check if the module is not init before
-	if(u8_gs_buzzerState == NOT_INIT)
      586:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <u8_gs_buzzerState>
      58a:	88 23       	and	r24, r24
      58c:	49 f0       	breq	.+18     	; 0x5a0 <BUZZER_stop+0x1a>
-		return BUZZER_E_NOT_OK;
-	
-	// Turn the buzzer off
-	DIO_writePIN(st_gs_buzzerConfig.u8_port,st_gs_buzzerConfig.u8_pin, STD_LOW);
      58e:	ea e0       	ldi	r30, 0x0A	; 10
      590:	f1 e0       	ldi	r31, 0x01	; 1
      592:	60 81       	ld	r22, Z
      594:	40 e0       	ldi	r20, 0x00	; 0
      596:	81 81       	ldd	r24, Z+1	; 0x01
      598:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-	
-	return BUZZER_E_OK;
      59c:	80 e0       	ldi	r24, 0x00	; 0
      59e:	08 95       	ret
-}
-u8_en_buzzerErrorsType BUZZER_stop(void)
-{
-	// Check if the module is not init before
-	if(u8_gs_buzzerState == NOT_INIT)
-		return BUZZER_E_NOT_OK;
      5a0:	86 e0       	ldi	r24, 0x06	; 6
-	
-	// Turn the buzzer off
-	DIO_writePIN(st_gs_buzzerConfig.u8_port,st_gs_buzzerConfig.u8_pin, STD_LOW);
-	
-	return BUZZER_E_OK;
      5a2:	08 95       	ret
 
 000005a4 <KEYPAD_init>:
-#define F_CPU 1000000U
-#include<util/delay.h>
-static uint8_t keypad[4][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'},{'*','0','#'}};
-extern st_keypadConfigType st_gs_keypadConfig;
-u8_en_keypadErrorsType KEYPAD_init (st_keypadConfigType* st_config)
-{
      5a4:	cf 93       	push	r28
      5a6:	df 93       	push	r29
-	u8_en_keypadErrorsType ret_val=KEYPAD_E_OK;
-	if(st_config==(void*)0)
      5a8:	00 97       	sbiw	r24, 0x00	; 0
      5aa:	a9 f1       	breq	.+106    	; 0x616 <KEYPAD_init+0x72>
      5ac:	ec 01       	movw	r28, r24
-	{
-		ret_val=KEYPAD_E_NOT_OK;
-	}
-	else
-	{
-		DIO_init(st_config->u8_row1Pin[0],st_config->u8_row1Pin[1],STD_INPUT);
      5ae:	69 81       	ldd	r22, Y+1	; 0x01
      5b0:	40 e0       	ldi	r20, 0x00	; 0
      5b2:	88 81       	ld	r24, Y
      5b4:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-		DIO_init(st_config->u8_row2Pin[0],st_config->u8_row2Pin[1],STD_INPUT);
      5b8:	6b 81       	ldd	r22, Y+3	; 0x03
      5ba:	40 e0       	ldi	r20, 0x00	; 0
      5bc:	8a 81       	ldd	r24, Y+2	; 0x02
      5be:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-		DIO_init(st_config->u8_row3Pin[0],st_config->u8_row3Pin[1],STD_INPUT);
      5c2:	6d 81       	ldd	r22, Y+5	; 0x05
      5c4:	40 e0       	ldi	r20, 0x00	; 0
      5c6:	8c 81       	ldd	r24, Y+4	; 0x04
      5c8:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-		DIO_writePIN(st_config->u8_row1Pin[0],st_config->u8_row1Pin[1],STD_HIGH);
      5cc:	69 81       	ldd	r22, Y+1	; 0x01
      5ce:	41 e0       	ldi	r20, 0x01	; 1
      5d0:	88 81       	ld	r24, Y
      5d2:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-		DIO_writePIN(st_config->u8_row2Pin[0],st_config->u8_row2Pin[1],STD_HIGH);
      5d6:	6b 81       	ldd	r22, Y+3	; 0x03
      5d8:	41 e0       	ldi	r20, 0x01	; 1
      5da:	8a 81       	ldd	r24, Y+2	; 0x02
      5dc:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-		DIO_writePIN(st_config->u8_row3Pin[0],st_config->u8_row3Pin[1],STD_HIGH);
      5e0:	6d 81       	ldd	r22, Y+5	; 0x05
      5e2:	41 e0       	ldi	r20, 0x01	; 1
      5e4:	8c 81       	ldd	r24, Y+4	; 0x04
      5e6:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-		
-		DIO_init(st_config->u8_col1Pin[0],st_config->u8_col1Pin[1],STD_OUTPUT);
      5ea:	6f 81       	ldd	r22, Y+7	; 0x07
      5ec:	41 e0       	ldi	r20, 0x01	; 1
      5ee:	8e 81       	ldd	r24, Y+6	; 0x06
      5f0:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-		DIO_init(st_config->u8_col2Pin[0],st_config->u8_col2Pin[1],STD_OUTPUT);
      5f4:	69 85       	ldd	r22, Y+9	; 0x09
      5f6:	41 e0       	ldi	r20, 0x01	; 1
      5f8:	88 85       	ldd	r24, Y+8	; 0x08
      5fa:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-		DIO_init(st_config->u8_col3Pin[0],st_config->u8_col3Pin[1],STD_OUTPUT);
      5fe:	6b 85       	ldd	r22, Y+11	; 0x0b
      600:	41 e0       	ldi	r20, 0x01	; 1
      602:	8a 85       	ldd	r24, Y+10	; 0x0a
      604:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-		DIO_init(st_config->u8_col4Pin[0],st_config->u8_col4Pin[1],STD_OUTPUT);
      608:	6d 85       	ldd	r22, Y+13	; 0x0d
      60a:	41 e0       	ldi	r20, 0x01	; 1
      60c:	8c 85       	ldd	r24, Y+12	; 0x0c
      60e:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-#include<util/delay.h>
-static uint8_t keypad[4][3]={{'1','2','3'},{'4','5','6'},{'7','8','9'},{'*','0','#'}};
-extern st_keypadConfigType st_gs_keypadConfig;
-u8_en_keypadErrorsType KEYPAD_init (st_keypadConfigType* st_config)
-{
-	u8_en_keypadErrorsType ret_val=KEYPAD_E_OK;
      612:	80 e0       	ldi	r24, 0x00	; 0
      614:	01 c0       	rjmp	.+2      	; 0x618 <KEYPAD_init+0x74>
-	if(st_config==(void*)0)
-	{
-		ret_val=KEYPAD_E_NOT_OK;
      616:	87 e0       	ldi	r24, 0x07	; 7
-		DIO_init(st_config->u8_col2Pin[0],st_config->u8_col2Pin[1],STD_OUTPUT);
-		DIO_init(st_config->u8_col3Pin[0],st_config->u8_col3Pin[1],STD_OUTPUT);
-		DIO_init(st_config->u8_col4Pin[0],st_config->u8_col4Pin[1],STD_OUTPUT);
-	}
-	return ret_val;
-}
      618:	df 91       	pop	r29
      61a:	cf 91       	pop	r28
      61c:	08 95       	ret
 
 0000061e <KEYPAD_read>:
-
-u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
-{   u8_en_keypadErrorsType ret_val=KEYPAD_E_OK;
      61e:	df 92       	push	r13
      620:	ef 92       	push	r14
      622:	ff 92       	push	r15
@@ -1208,8 +1086,6 @@ u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
      62e:	cd b7       	in	r28, 0x3d	; 61
      630:	de b7       	in	r29, 0x3e	; 62
      632:	7c 01       	movw	r14, r24
-	uint8_t value,flag=0;
-	DIO_writePIN(st_gs_keypadConfig.u8_col1Pin[0],st_gs_keypadConfig.u8_col1Pin[1],STD_HIGH);
      634:	0c e2       	ldi	r16, 0x2C	; 44
      636:	11 e0       	ldi	r17, 0x01	; 1
      638:	f8 01       	movw	r30, r16
@@ -1217,43 +1093,24 @@ u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
      63c:	41 e0       	ldi	r20, 0x01	; 1
      63e:	86 81       	ldd	r24, Z+6	; 0x06
      640:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-	DIO_writePIN(st_gs_keypadConfig.u8_col2Pin[0],st_gs_keypadConfig.u8_col2Pin[1],STD_HIGH);
      644:	f8 01       	movw	r30, r16
      646:	61 85       	ldd	r22, Z+9	; 0x09
      648:	41 e0       	ldi	r20, 0x01	; 1
      64a:	80 85       	ldd	r24, Z+8	; 0x08
      64c:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-	DIO_writePIN(st_gs_keypadConfig.u8_col3Pin[0],st_gs_keypadConfig.u8_col3Pin[1],STD_HIGH);
      650:	f8 01       	movw	r30, r16
      652:	63 85       	ldd	r22, Z+11	; 0x0b
      654:	41 e0       	ldi	r20, 0x01	; 1
      656:	82 85       	ldd	r24, Z+10	; 0x0a
      658:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-	DIO_writePIN(st_gs_keypadConfig.u8_col4Pin[0],st_gs_keypadConfig.u8_col4Pin[1],STD_HIGH);
      65c:	f8 01       	movw	r30, r16
      65e:	65 85       	ldd	r22, Z+13	; 0x0d
      660:	41 e0       	ldi	r20, 0x01	; 1
      662:	84 85       	ldd	r24, Z+12	; 0x0c
      664:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-	uint8_t i,j;
-	for(i=0;i<4;i++)
      668:	00 e0       	ldi	r16, 0x00	; 0
-	return ret_val;
-}
-
-u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
-{   u8_en_keypadErrorsType ret_val=KEYPAD_E_OK;
-	uint8_t value,flag=0;
      66a:	d1 2c       	mov	r13, r1
-	DIO_writePIN(st_gs_keypadConfig.u8_col1Pin[0],st_gs_keypadConfig.u8_col1Pin[1],STD_HIGH);
-	DIO_writePIN(st_gs_keypadConfig.u8_col2Pin[0],st_gs_keypadConfig.u8_col2Pin[1],STD_HIGH);
-	DIO_writePIN(st_gs_keypadConfig.u8_col3Pin[0],st_gs_keypadConfig.u8_col3Pin[1],STD_HIGH);
-	DIO_writePIN(st_gs_keypadConfig.u8_col4Pin[0],st_gs_keypadConfig.u8_col4Pin[1],STD_HIGH);
-	uint8_t i,j;
-	for(i=0;i<4;i++)
      66c:	42 c0       	rjmp	.+132    	; 0x6f2 <KEYPAD_read+0xd4>
-	{
-		DIO_writePIN(st_gs_keypadConfig.u8_col1Pin[0],st_gs_keypadConfig.u8_col1Pin[1]+i,STD_LOW);
      66e:	ec e2       	ldi	r30, 0x2C	; 44
      670:	f1 e0       	ldi	r31, 0x01	; 1
      672:	67 81       	ldd	r22, Z+7	; 0x07
@@ -1261,11 +1118,8 @@ u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
      676:	40 e0       	ldi	r20, 0x00	; 0
      678:	86 81       	ldd	r24, Z+6	; 0x06
      67a:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-		for(j=0;j<3;j++)
      67e:	10 e0       	ldi	r17, 0x00	; 0
      680:	2d c0       	rjmp	.+90     	; 0x6dc <KEYPAD_read+0xbe>
-		{
-			DIO_readPIN(st_gs_keypadConfig.u8_row1Pin[0],st_gs_keypadConfig.u8_row1Pin[1]+j,&value);
      682:	ec e2       	ldi	r30, 0x2C	; 44
      684:	f1 e0       	ldi	r31, 0x01	; 1
      686:	61 81       	ldd	r22, Z+1	; 0x01
@@ -1275,15 +1129,10 @@ u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
      68e:	5f 4f       	sbci	r21, 0xFF	; 255
      690:	80 81       	ld	r24, Z
      692:	0e 94 8e 07 	call	0xf1c	; 0xf1c <DIO_readPIN>
-			if(value==0)
      696:	89 81       	ldd	r24, Y+1	; 0x01
      698:	81 11       	cpse	r24, r1
      69a:	1f c0       	rjmp	.+62     	; 0x6da <KEYPAD_read+0xbc>
      69c:	0a c0       	rjmp	.+20     	; 0x6b2 <KEYPAD_read+0x94>
-			{  
-				 while(value==0)
-				 {
-					 DIO_readPIN(st_gs_keypadConfig.u8_row1Pin[0],st_gs_keypadConfig.u8_row1Pin[1]+j,&value);
      69e:	ec e2       	ldi	r30, 0x2C	; 44
      6a0:	f1 e0       	ldi	r31, 0x01	; 1
      6a2:	61 81       	ldd	r22, Z+1	; 0x01
@@ -1293,19 +1142,9 @@ u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
      6aa:	5f 4f       	sbci	r21, 0xFF	; 255
      6ac:	80 81       	ld	r24, Z
      6ae:	0e 94 8e 07 	call	0xf1c	; 0xf1c <DIO_readPIN>
-		for(j=0;j<3;j++)
-		{
-			DIO_readPIN(st_gs_keypadConfig.u8_row1Pin[0],st_gs_keypadConfig.u8_row1Pin[1]+j,&value);
-			if(value==0)
-			{  
-				 while(value==0)
      6b2:	89 81       	ldd	r24, Y+1	; 0x01
      6b4:	88 23       	and	r24, r24
      6b6:	99 f3       	breq	.-26     	; 0x69e <KEYPAD_read+0x80>
-				 {
-					 DIO_readPIN(st_gs_keypadConfig.u8_row1Pin[0],st_gs_keypadConfig.u8_row1Pin[1]+j,&value);
-				 }
-				*u8_data=keypad[i][j];
      6b8:	80 2f       	mov	r24, r16
      6ba:	90 e0       	ldi	r25, 0x00	; 0
      6bc:	fc 01       	movw	r30, r24
@@ -1320,27 +1159,12 @@ u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
      6ce:	80 81       	ld	r24, Z
      6d0:	f7 01       	movw	r30, r14
      6d2:	80 83       	st	Z, r24
-				flag=1;
      6d4:	dd 24       	eor	r13, r13
      6d6:	d3 94       	inc	r13
-				
-				break;
      6d8:	03 c0       	rjmp	.+6      	; 0x6e0 <KEYPAD_read+0xc2>
-	DIO_writePIN(st_gs_keypadConfig.u8_col4Pin[0],st_gs_keypadConfig.u8_col4Pin[1],STD_HIGH);
-	uint8_t i,j;
-	for(i=0;i<4;i++)
-	{
-		DIO_writePIN(st_gs_keypadConfig.u8_col1Pin[0],st_gs_keypadConfig.u8_col1Pin[1]+i,STD_LOW);
-		for(j=0;j<3;j++)
      6da:	1f 5f       	subi	r17, 0xFF	; 255
      6dc:	13 30       	cpi	r17, 0x03	; 3
      6de:	88 f2       	brcs	.-94     	; 0x682 <KEYPAD_read+0x64>
-				
-				break;
-			}
-			
-		}
-		DIO_writePIN(st_gs_keypadConfig.u8_col1Pin[0],st_gs_keypadConfig.u8_col1Pin[1]+i,STD_HIGH);
      6e0:	ec e2       	ldi	r30, 0x2C	; 44
      6e2:	f1 e0       	ldi	r31, 0x01	; 1
      6e4:	67 81       	ldd	r22, Z+7	; 0x07
@@ -1348,37 +1172,16 @@ u8_en_keypadErrorsType KEYPAD_read (uint8_t * u8_data)
      6e8:	41 e0       	ldi	r20, 0x01	; 1
      6ea:	86 81       	ldd	r24, Z+6	; 0x06
      6ec:	0e 94 13 07 	call	0xe26	; 0xe26 <DIO_writePIN>
-	DIO_writePIN(st_gs_keypadConfig.u8_col1Pin[0],st_gs_keypadConfig.u8_col1Pin[1],STD_HIGH);
-	DIO_writePIN(st_gs_keypadConfig.u8_col2Pin[0],st_gs_keypadConfig.u8_col2Pin[1],STD_HIGH);
-	DIO_writePIN(st_gs_keypadConfig.u8_col3Pin[0],st_gs_keypadConfig.u8_col3Pin[1],STD_HIGH);
-	DIO_writePIN(st_gs_keypadConfig.u8_col4Pin[0],st_gs_keypadConfig.u8_col4Pin[1],STD_HIGH);
-	uint8_t i,j;
-	for(i=0;i<4;i++)
      6f0:	0f 5f       	subi	r16, 0xFF	; 255
      6f2:	04 30       	cpi	r16, 0x04	; 4
      6f4:	08 f4       	brcc	.+2      	; 0x6f8 <KEYPAD_read+0xda>
      6f6:	bb cf       	rjmp	.-138    	; 0x66e <KEYPAD_read+0x50>
-		DIO_writePIN(st_gs_keypadConfig.u8_col1Pin[0],st_gs_keypadConfig.u8_col1Pin[1]+i,STD_HIGH);
-	}
-	
-	
-	
-	if(flag==1)
      6f8:	f1 e0       	ldi	r31, 0x01	; 1
      6fa:	df 16       	cp	r13, r31
      6fc:	19 f0       	breq	.+6      	; 0x704 <KEYPAD_read+0xe6>
-		
-		return ret_val;
-	}
-	else
-	{
-		*u8_data='N';
      6fe:	8e e4       	ldi	r24, 0x4E	; 78
      700:	f7 01       	movw	r30, r14
      702:	80 83       	st	Z, r24
-		return ret_val;
-	}
-	
      704:	80 e0       	ldi	r24, 0x00	; 0
      706:	0f 90       	pop	r0
      708:	df 91       	pop	r29
@@ -2095,19 +1898,8 @@ u8_en_lcdErrorsType LCD_writeSpChar (u8_en_lcdSpCharType u8_SpChar)
      b06:	08 95       	ret
 
 00000b08 <TEMP_SENSOR_init>:
-static void get_Vref(u8_en_adcRefType u8_a_Vref);*/
-
-static st_adcConfigType st_sg_adc;
-
-u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config)
-{
      b08:	cf 93       	push	r28
      b0a:	df 93       	push	r29
-	u8_en_tempSensorErrorsType l_TempSensor_ret = TEMP_E_OK;
-	u8_en_adcErrorsType l_adc_ret = ADC_E_OK;
-	u8_en_dioErrors l_dio_ret = DIO_E_OK;
-	
-	if(NULL==st_config || st_config->u8_channel >= ADC_INVALID_CHANNEL || st_config->u8_prescaler_selection >= ADC_INVALID_PRESCALER )
      b0c:	00 97       	sbiw	r24, 0x00	; 0
      b0e:	b9 f0       	breq	.+46     	; 0xb3e <TEMP_SENSOR_init+0x36>
      b10:	fc 01       	movw	r30, r24
@@ -2118,59 +1910,29 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config)
      b1a:	28 30       	cpi	r18, 0x08	; 8
      b1c:	a0 f4       	brcc	.+40     	; 0xb46 <TEMP_SENSOR_init+0x3e>
      b1e:	ec 01       	movw	r28, r24
-	{
-		l_TempSensor_ret = TEMP_E_NOT_OK;
-	}
-	else
-	{
-		st_sg_adc.u8_prescaler_selection = st_config->u8_prescaler_selection;
      b20:	ed e0       	ldi	r30, 0x0D	; 13
      b22:	f1 e0       	ldi	r31, 0x01	; 1
      b24:	21 83       	std	Z+1, r18	; 0x01
-		st_sg_adc.u8_ref_selection = st_config->u8_ref_selection;
      b26:	88 81       	ld	r24, Y
      b28:	80 83       	st	Z, r24
-		l_adc_ret = ADC_init(&st_sg_adc);
      b2a:	cf 01       	movw	r24, r30
      b2c:	0e 94 7a 06 	call	0xcf4	; 0xcf4 <ADC_init>
-		l_dio_ret = DIO_init(porta,st_config->u8_channel,STD_INPUT);
      b30:	6a 81       	ldd	r22, Y+2	; 0x02
      b32:	40 e0       	ldi	r20, 0x00	; 0
      b34:	80 e0       	ldi	r24, 0x00	; 0
      b36:	0e 94 d9 06 	call	0xdb2	; 0xdb2 <DIO_init>
-
-static st_adcConfigType st_sg_adc;
-
-u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config)
-{
-	u8_en_tempSensorErrorsType l_TempSensor_ret = TEMP_E_OK;
      b3a:	80 e0       	ldi	r24, 0x00	; 0
      b3c:	05 c0       	rjmp	.+10     	; 0xb48 <TEMP_SENSOR_init+0x40>
-	u8_en_adcErrorsType l_adc_ret = ADC_E_OK;
-	u8_en_dioErrors l_dio_ret = DIO_E_OK;
-	
-	if(NULL==st_config || st_config->u8_channel >= ADC_INVALID_CHANNEL || st_config->u8_prescaler_selection >= ADC_INVALID_PRESCALER )
-	{
-		l_TempSensor_ret = TEMP_E_NOT_OK;
      b3e:	88 e0       	ldi	r24, 0x08	; 8
      b40:	03 c0       	rjmp	.+6      	; 0xb48 <TEMP_SENSOR_init+0x40>
      b42:	88 e0       	ldi	r24, 0x08	; 8
      b44:	01 c0       	rjmp	.+2      	; 0xb48 <TEMP_SENSOR_init+0x40>
      b46:	88 e0       	ldi	r24, 0x08	; 8
-		/*get_channel(st_config->u8_channel);
-		get_Vref(st_config->u8_ref_selection);*/
-				
-	}
-	return l_TempSensor_ret;
-}
      b48:	df 91       	pop	r29
      b4a:	cf 91       	pop	r28
      b4c:	08 95       	ret
 
 00000b4e <TEMP_SENSOR_read>:
-
-u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config , float * f32_data)
-{
      b4e:	8f 92       	push	r8
      b50:	9f 92       	push	r9
      b52:	af 92       	push	r10
@@ -2183,14 +1945,8 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      b60:	00 d0       	rcall	.+0      	; 0xb62 <TEMP_SENSOR_read+0x14>
      b62:	cd b7       	in	r28, 0x3d	; 61
      b64:	de b7       	in	r29, 0x3e	; 62
-	u8_en_tempSensorErrorsType l_TempSensor_ret = TEMP_E_OK;
-	u8_en_adcErrorsType l_adc_ret = ADC_E_OK;
-	uint16_t u16_l_readTemp_ADC = 0;
      b66:	1a 82       	std	Y+2, r1	; 0x02
      b68:	19 82       	std	Y+1, r1	; 0x01
-	float f32_l_stepSize = 0.0;
-	
-	if(NULL== f32_data || NULL==st_config || st_config->u8_channel >= ADC_INVALID_CHANNEL || st_config->u8_prescaler_selection >= ADC_INVALID_PRESCALER)
      b6a:	61 15       	cp	r22, r1
      b6c:	71 05       	cpc	r23, r1
      b6e:	09 f4       	brne	.+2      	; 0xb72 <TEMP_SENSOR_read+0x24>
@@ -2209,40 +1965,20 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      b88:	5e c0       	rjmp	.+188    	; 0xc46 <TEMP_SENSOR_read+0xf8>
      b8a:	7b 01       	movw	r14, r22
      b8c:	5c 01       	movw	r10, r24
-		l_TempSensor_ret = TEMP_E_NOT_OK;
-	}
-	else
-	{
-		
-		l_adc_ret = ADC_read(st_config->u8_channel,&u16_l_readTemp_ADC);
      b8e:	be 01       	movw	r22, r28
      b90:	6f 5f       	subi	r22, 0xFF	; 255
      b92:	7f 4f       	sbci	r23, 0xFF	; 255
      b94:	82 2f       	mov	r24, r18
      b96:	0e 94 91 06 	call	0xd22	; 0xd22 <ADC_read>
      b9a:	18 2f       	mov	r17, r24
-		
-		if(ADC_E_OK==l_adc_ret)
      b9c:	81 11       	cpse	r24, r1
      b9e:	0a c0       	rjmp	.+20     	; 0xbb4 <TEMP_SENSOR_read+0x66>
-		{
-			if( ADC_INTERNAL_2_56V_REF == st_config->u8_ref_selection)
      ba0:	f5 01       	movw	r30, r10
      ba2:	80 81       	ld	r24, Z
      ba4:	83 30       	cpi	r24, 0x03	; 3
      ba6:	51 f0       	breq	.+20     	; 0xbbc <TEMP_SENSOR_read+0x6e>
-			{
-				f32_l_stepSize = ( INTERNAL_VOLTAGE /ADC_MAX_RESOLUTION);
-			}
-			else if(ADC_AVCC == st_config->u8_ref_selection)
      ba8:	81 30       	cpi	r24, 0x01	; 1
      baa:	99 f0       	breq	.+38     	; 0xbd2 <TEMP_SENSOR_read+0x84>
-u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config , float * f32_data)
-{
-	u8_en_tempSensorErrorsType l_TempSensor_ret = TEMP_E_OK;
-	u8_en_adcErrorsType l_adc_ret = ADC_E_OK;
-	uint16_t u16_l_readTemp_ADC = 0;
-	float f32_l_stepSize = 0.0;
      bac:	81 2c       	mov	r8, r1
      bae:	91 2c       	mov	r9, r1
      bb0:	54 01       	movw	r10, r8
@@ -2251,12 +1987,6 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      bb6:	91 2c       	mov	r9, r1
      bb8:	54 01       	movw	r10, r8
      bba:	13 c0       	rjmp	.+38     	; 0xbe2 <TEMP_SENSOR_read+0x94>
-		
-		if(ADC_E_OK==l_adc_ret)
-		{
-			if( ADC_INTERNAL_2_56V_REF == st_config->u8_ref_selection)
-			{
-				f32_l_stepSize = ( INTERNAL_VOLTAGE /ADC_MAX_RESOLUTION);
      bbc:	0f 2e       	mov	r0, r31
      bbe:	fa e0       	ldi	r31, 0x0A	; 10
      bc0:	8f 2e       	mov	r8, r31
@@ -2268,10 +1998,6 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      bcc:	bf 2e       	mov	r11, r31
      bce:	f0 2d       	mov	r31, r0
      bd0:	08 c0       	rjmp	.+16     	; 0xbe2 <TEMP_SENSOR_read+0x94>
-			}
-			else if(ADC_AVCC == st_config->u8_ref_selection)
-			{
-				f32_l_stepSize = ( AVCC_VOLTAGE /ADC_MAX_RESOLUTION);
      bd2:	0f 2e       	mov	r0, r31
      bd4:	81 2c       	mov	r8, r1
      bd6:	91 2c       	mov	r9, r1
@@ -2280,12 +2006,6 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      bdc:	fb e3       	ldi	r31, 0x3B	; 59
      bde:	bf 2e       	mov	r11, r31
      be0:	f0 2d       	mov	r31, r0
-		{
-			l_TempSensor_ret = l_adc_ret;
-		}
-		
-		/*get the ADC digital value in analog voltage(DAC) then in temperature degree*/
-		if((((float)u16_l_readTemp_ADC )* f32_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR) >= MAX_TEMPERATURE_SENSOR_VALUE)
      be2:	69 81       	ldd	r22, Y+1	; 0x01
      be4:	7a 81       	ldd	r23, Y+2	; 0x02
      be6:	80 e0       	ldi	r24, 0x00	; 0
@@ -2310,9 +2030,6 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      c12:	0e 94 6a 0b 	call	0x16d4	; 0x16d4 <__gesf2>
      c16:	88 23       	and	r24, r24
      c18:	54 f0       	brlt	.+20     	; 0xc2e <TEMP_SENSOR_read+0xe0>
-		{
-			// if temperature more than maximum ,will saturate at maximum possible temperature the sensor can measure 
-			*f32_data = MAX_TEMPERATURE_SENSOR_VALUE ;
      c1a:	80 e0       	ldi	r24, 0x00	; 0
      c1c:	90 e0       	ldi	r25, 0x00	; 0
      c1e:	a6 e1       	ldi	r26, 0x16	; 22
@@ -2323,22 +2040,12 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      c28:	a2 83       	std	Z+2, r26	; 0x02
      c2a:	b3 83       	std	Z+3, r27	; 0x03
      c2c:	0d c0       	rjmp	.+26     	; 0xc48 <TEMP_SENSOR_read+0xfa>
-		}
-		else
-		{
-			*f32_data = (float)(((double)u16_l_readTemp_ADC) * f32_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
      c2e:	f7 01       	movw	r30, r14
      c30:	80 82       	st	Z, r8
      c32:	91 82       	std	Z+1, r9	; 0x01
      c34:	a2 82       	std	Z+2, r10	; 0x02
      c36:	b3 82       	std	Z+3, r11	; 0x03
      c38:	07 c0       	rjmp	.+14     	; 0xc48 <TEMP_SENSOR_read+0xfa>
-	uint16_t u16_l_readTemp_ADC = 0;
-	float f32_l_stepSize = 0.0;
-	
-	if(NULL== f32_data || NULL==st_config || st_config->u8_channel >= ADC_INVALID_CHANNEL || st_config->u8_prescaler_selection >= ADC_INVALID_PRESCALER)
-	{
-		l_TempSensor_ret = TEMP_E_NOT_OK;
      c3a:	18 e0       	ldi	r17, 0x08	; 8
      c3c:	05 c0       	rjmp	.+10     	; 0xc48 <TEMP_SENSOR_read+0xfa>
      c3e:	18 e0       	ldi	r17, 0x08	; 8
@@ -2346,12 +2053,6 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
      c42:	18 e0       	ldi	r17, 0x08	; 8
      c44:	01 c0       	rjmp	.+2      	; 0xc48 <TEMP_SENSOR_read+0xfa>
      c46:	18 e0       	ldi	r17, 0x08	; 8
-			*f32_data = (float)(((double)u16_l_readTemp_ADC) * f32_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
-		}
-		
-	}
-	return l_TempSensor_ret;
-}
      c48:	81 2f       	mov	r24, r17
      c4a:	0f 90       	pop	r0
      c4c:	0f 90       	pop	r0
@@ -2464,19 +2165,7 @@ u8_en_timerErrorsType TIMER_Manager_reset (st_timerConfigType* st_config)
      ce8:	08 95       	ret
 
 00000cea <main>:
-int main(void)
-{
-	//DDRD = 0xff;
-	//PORTD  = 0x00;
-	//st_timerConfigType st_gs_timer0_0_config;
-	APP_start();
      cea:	0e 94 7c 02 	call	0x4f8	; 0x4f8 <APP_start>
-	sei();
-	while(1)
-	{
-		
-	}*/
-}
      cee:	80 e0       	ldi	r24, 0x00	; 0
      cf0:	90 e0       	ldi	r25, 0x00	; 0
      cf2:	08 95       	ret
@@ -2642,20 +2331,10 @@ u8_en_adcErrorsType ADC_read (u8_en_adcChannelId u8_channelID, uint16_t * u16_da
      db0:	08 95       	ret
 
 00000db2 <DIO_init>:
-
-
-u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDirType direction)
-{
-	
-	if (pin < DIO_MAX_PINS)
      db2:	68 30       	cpi	r22, 0x08	; 8
      db4:	a0 f5       	brcc	.+104    	; 0xe1e <DIO_init+0x6c>
-	{
-		if (port == porta)
      db6:	81 11       	cpse	r24, r1
      db8:	0b c0       	rjmp	.+22     	; 0xdd0 <DIO_init+0x1e>
-		{
-			DATA_DIRECTION_PORTA |= direction << pin;
      dba:	8a b3       	in	r24, 0x1a	; 26
      dbc:	50 e0       	ldi	r21, 0x00	; 0
      dbe:	02 c0       	rjmp	.+4      	; 0xdc4 <DIO_init+0x12>
@@ -2665,15 +2344,10 @@ u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDir
      dc6:	e2 f7       	brpl	.-8      	; 0xdc0 <DIO_init+0xe>
      dc8:	48 2b       	or	r20, r24
      dca:	4a bb       	out	0x1a, r20	; 26
-			return DIO_E_OK;
      dcc:	80 e0       	ldi	r24, 0x00	; 0
      dce:	08 95       	ret
-		}
-		else if (port == portb)
      dd0:	81 30       	cpi	r24, 0x01	; 1
      dd2:	59 f4       	brne	.+22     	; 0xdea <DIO_init+0x38>
-		{
-			DATA_DIRECTION_PORTB |= direction << pin;
      dd4:	87 b3       	in	r24, 0x17	; 23
      dd6:	50 e0       	ldi	r21, 0x00	; 0
      dd8:	02 c0       	rjmp	.+4      	; 0xdde <DIO_init+0x2c>
@@ -2683,15 +2357,10 @@ u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDir
      de0:	e2 f7       	brpl	.-8      	; 0xdda <DIO_init+0x28>
      de2:	48 2b       	or	r20, r24
      de4:	47 bb       	out	0x17, r20	; 23
-			return DIO_E_OK;
      de6:	80 e0       	ldi	r24, 0x00	; 0
      de8:	08 95       	ret
-		}
-		else if (port == portc)
      dea:	82 30       	cpi	r24, 0x02	; 2
      dec:	59 f4       	brne	.+22     	; 0xe04 <DIO_init+0x52>
-		{
-			DATA_DIRECTION_PORTC |= direction << pin;
      dee:	84 b3       	in	r24, 0x14	; 20
      df0:	50 e0       	ldi	r21, 0x00	; 0
      df2:	02 c0       	rjmp	.+4      	; 0xdf8 <DIO_init+0x46>
@@ -2701,15 +2370,10 @@ u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDir
      dfa:	e2 f7       	brpl	.-8      	; 0xdf4 <DIO_init+0x42>
      dfc:	48 2b       	or	r20, r24
      dfe:	44 bb       	out	0x14, r20	; 20
-			return DIO_E_OK;
      e00:	80 e0       	ldi	r24, 0x00	; 0
      e02:	08 95       	ret
-		}
-		else if (port == portd)
      e04:	83 30       	cpi	r24, 0x03	; 3
      e06:	69 f4       	brne	.+26     	; 0xe22 <DIO_init+0x70>
-		{
-			DATA_DIRECTION_PORTD |= direction << pin;
      e08:	81 b3       	in	r24, 0x11	; 17
      e0a:	50 e0       	ldi	r21, 0x00	; 0
      e0c:	02 c0       	rjmp	.+4      	; 0xe12 <DIO_init+0x60>
@@ -2719,49 +2383,21 @@ u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDir
      e14:	e2 f7       	brpl	.-8      	; 0xe0e <DIO_init+0x5c>
      e16:	48 2b       	or	r20, r24
      e18:	41 bb       	out	0x11, r20	; 17
-			return DIO_E_OK;
      e1a:	80 e0       	ldi	r24, 0x00	; 0
      e1c:	08 95       	ret
-			return DIO_InvalidPort;
-		}
-		
-	}
-	else{
-		return DIO_InvalidPin;
      e1e:	81 e0       	ldi	r24, 0x01	; 1
      e20:	08 95       	ret
-			DATA_DIRECTION_PORTD |= direction << pin;
-			return DIO_E_OK;
-		}
-		else
-		{
-			return DIO_InvalidPort;
      e22:	82 e0       	ldi	r24, 0x02	; 2
-		
-	}
-	else{
-		return DIO_InvalidPin;
-	}
-}
      e24:	08 95       	ret
 
 00000e26 <DIO_writePIN>:
-u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_dioLevelType state)
-{
-	if (pin < DIO_MAX_PINS)
      e26:	68 30       	cpi	r22, 0x08	; 8
      e28:	08 f0       	brcs	.+2      	; 0xe2c <DIO_writePIN+0x6>
      e2a:	74 c0       	rjmp	.+232    	; 0xf14 <DIO_writePIN+0xee>
-	{
-		if (port == porta)
      e2c:	81 11       	cpse	r24, r1
      e2e:	1b c0       	rjmp	.+54     	; 0xe66 <DIO_writePIN+0x40>
-		{
-			if (state == STD_HIGH)
      e30:	41 30       	cpi	r20, 0x01	; 1
      e32:	61 f4       	brne	.+24     	; 0xe4c <DIO_writePIN+0x26>
-			{
-				WR_PORT_A |= (1U << pin);
      e34:	2b b3       	in	r18, 0x1b	; 27
      e36:	81 e0       	ldi	r24, 0x01	; 1
      e38:	90 e0       	ldi	r25, 0x00	; 0
@@ -2772,19 +2408,8 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      e42:	e2 f7       	brpl	.-8      	; 0xe3c <DIO_writePIN+0x16>
      e44:	82 2b       	or	r24, r18
      e46:	8b bb       	out	0x1b, r24	; 27
-			}
-			else{
-				WR_PORT_A &= ~(1U << pin);
-			}
-			return DIO_E_OK;
      e48:	80 e0       	ldi	r24, 0x00	; 0
      e4a:	08 95       	ret
-			if (state == STD_HIGH)
-			{
-				WR_PORT_A |= (1U << pin);
-			}
-			else{
-				WR_PORT_A &= ~(1U << pin);
      e4c:	2b b3       	in	r18, 0x1b	; 27
      e4e:	81 e0       	ldi	r24, 0x01	; 1
      e50:	90 e0       	ldi	r25, 0x00	; 0
@@ -2796,20 +2421,12 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      e5c:	80 95       	com	r24
      e5e:	82 23       	and	r24, r18
      e60:	8b bb       	out	0x1b, r24	; 27
-			}
-			return DIO_E_OK;
      e62:	80 e0       	ldi	r24, 0x00	; 0
      e64:	08 95       	ret
-		}
-		else if (port == portb)
      e66:	81 30       	cpi	r24, 0x01	; 1
      e68:	d9 f4       	brne	.+54     	; 0xea0 <DIO_writePIN+0x7a>
-		{
-			if (state == STD_HIGH)
      e6a:	41 30       	cpi	r20, 0x01	; 1
      e6c:	61 f4       	brne	.+24     	; 0xe86 <DIO_writePIN+0x60>
-			{
-				WR_PORT_B |= (1U << pin);
      e6e:	28 b3       	in	r18, 0x18	; 24
      e70:	81 e0       	ldi	r24, 0x01	; 1
      e72:	90 e0       	ldi	r25, 0x00	; 0
@@ -2820,19 +2437,8 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      e7c:	e2 f7       	brpl	.-8      	; 0xe76 <DIO_writePIN+0x50>
      e7e:	82 2b       	or	r24, r18
      e80:	88 bb       	out	0x18, r24	; 24
-			}
-			else{
-				WR_PORT_B &= ~(1U << pin);
-			}
-			return DIO_E_OK;
      e82:	80 e0       	ldi	r24, 0x00	; 0
      e84:	08 95       	ret
-			if (state == STD_HIGH)
-			{
-				WR_PORT_B |= (1U << pin);
-			}
-			else{
-				WR_PORT_B &= ~(1U << pin);
      e86:	28 b3       	in	r18, 0x18	; 24
      e88:	81 e0       	ldi	r24, 0x01	; 1
      e8a:	90 e0       	ldi	r25, 0x00	; 0
@@ -2844,20 +2450,12 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      e96:	80 95       	com	r24
      e98:	82 23       	and	r24, r18
      e9a:	88 bb       	out	0x18, r24	; 24
-			}
-			return DIO_E_OK;
      e9c:	80 e0       	ldi	r24, 0x00	; 0
      e9e:	08 95       	ret
-		}
-		else if (port == portc)
      ea0:	82 30       	cpi	r24, 0x02	; 2
      ea2:	d9 f4       	brne	.+54     	; 0xeda <DIO_writePIN+0xb4>
-		{
-			if (state == STD_HIGH)
      ea4:	41 30       	cpi	r20, 0x01	; 1
      ea6:	61 f4       	brne	.+24     	; 0xec0 <DIO_writePIN+0x9a>
-			{
-				WR_PORT_C |= (1U << pin);
      ea8:	25 b3       	in	r18, 0x15	; 21
      eaa:	81 e0       	ldi	r24, 0x01	; 1
      eac:	90 e0       	ldi	r25, 0x00	; 0
@@ -2868,19 +2466,8 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      eb6:	e2 f7       	brpl	.-8      	; 0xeb0 <DIO_writePIN+0x8a>
      eb8:	82 2b       	or	r24, r18
      eba:	85 bb       	out	0x15, r24	; 21
-			}
-			else{
-				WR_PORT_C &= ~(1U << pin);
-			}
-			return DIO_E_OK;
      ebc:	80 e0       	ldi	r24, 0x00	; 0
      ebe:	08 95       	ret
-			if (state == STD_HIGH)
-			{
-				WR_PORT_C |= (1U << pin);
-			}
-			else{
-				WR_PORT_C &= ~(1U << pin);
      ec0:	25 b3       	in	r18, 0x15	; 21
      ec2:	81 e0       	ldi	r24, 0x01	; 1
      ec4:	90 e0       	ldi	r25, 0x00	; 0
@@ -2892,20 +2479,12 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      ed0:	80 95       	com	r24
      ed2:	82 23       	and	r24, r18
      ed4:	85 bb       	out	0x15, r24	; 21
-			}
-			return DIO_E_OK;
      ed6:	80 e0       	ldi	r24, 0x00	; 0
      ed8:	08 95       	ret
-		}
-		else if (port == portd)
      eda:	83 30       	cpi	r24, 0x03	; 3
      edc:	e9 f4       	brne	.+58     	; 0xf18 <DIO_writePIN+0xf2>
-		{
-			if (state == STD_HIGH)
      ede:	41 30       	cpi	r20, 0x01	; 1
      ee0:	61 f4       	brne	.+24     	; 0xefa <DIO_writePIN+0xd4>
-			{
-				WR_PORT_D |= (1U << pin);
      ee2:	22 b3       	in	r18, 0x12	; 18
      ee4:	81 e0       	ldi	r24, 0x01	; 1
      ee6:	90 e0       	ldi	r25, 0x00	; 0
@@ -2916,19 +2495,8 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      ef0:	e2 f7       	brpl	.-8      	; 0xeea <DIO_writePIN+0xc4>
      ef2:	82 2b       	or	r24, r18
      ef4:	82 bb       	out	0x12, r24	; 18
-			}
-			else{
-				WR_PORT_D &= ~(1U << pin);
-			}
-			return DIO_E_OK;
      ef6:	80 e0       	ldi	r24, 0x00	; 0
      ef8:	08 95       	ret
-			if (state == STD_HIGH)
-			{
-				WR_PORT_D |= (1U << pin);
-			}
-			else{
-				WR_PORT_D &= ~(1U << pin);
      efa:	22 b3       	in	r18, 0x12	; 18
      efc:	81 e0       	ldi	r24, 0x01	; 1
      efe:	90 e0       	ldi	r25, 0x00	; 0
@@ -2940,46 +2508,19 @@ u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_di
      f0a:	80 95       	com	r24
      f0c:	82 23       	and	r24, r18
      f0e:	82 bb       	out	0x12, r24	; 18
-			}
-			return DIO_E_OK;
      f10:	80 e0       	ldi	r24, 0x00	; 0
      f12:	08 95       	ret
-			return DIO_InvalidPort;
-		}
-		
-	}
-	else{
-		return DIO_InvalidPin;
      f14:	81 e0       	ldi	r24, 0x01	; 1
      f16:	08 95       	ret
-			}
-			return DIO_E_OK;
-		}
-		else
-		{
-			return DIO_InvalidPort;
      f18:	82 e0       	ldi	r24, 0x02	; 2
-		
-	}
-	else{
-		return DIO_InvalidPin;
-	}
-}
      f1a:	08 95       	ret
 
 00000f1c <DIO_readPIN>:
-u8_en_dioErrors DIO_readPIN (en_dioPortsType port, en_dioPinsType pin, uint8_t* value)
-{
-	if (pin < DIO_MAX_PINS)
      f1c:	68 30       	cpi	r22, 0x08	; 8
      f1e:	08 f0       	brcs	.+2      	; 0xf22 <DIO_readPIN+0x6>
      f20:	64 c0       	rjmp	.+200    	; 0xfea <DIO_readPIN+0xce>
-	{
-		if (port == porta)
      f22:	81 11       	cpse	r24, r1
      f24:	17 c0       	rjmp	.+46     	; 0xf54 <DIO_readPIN+0x38>
-		{
-			*value = ((RE_PORT_A & (1U<<pin))>>pin);
      f26:	79 b3       	in	r23, 0x19	; 25
      f28:	81 e0       	ldi	r24, 0x01	; 1
      f2a:	90 e0       	ldi	r25, 0x00	; 0
@@ -3001,15 +2542,10 @@ u8_en_dioErrors DIO_readPIN (en_dioPortsType port, en_dioPinsType pin, uint8_t* 
      f4a:	e2 f7       	brpl	.-8      	; 0xf44 <DIO_readPIN+0x28>
      f4c:	fa 01       	movw	r30, r20
      f4e:	80 83       	st	Z, r24
-			return DIO_E_OK;
      f50:	80 e0       	ldi	r24, 0x00	; 0
      f52:	08 95       	ret
-		}
-		else if (port == portb)
      f54:	81 30       	cpi	r24, 0x01	; 1
      f56:	b9 f4       	brne	.+46     	; 0xf86 <DIO_readPIN+0x6a>
-		{
-			*value = ((RE_PORT_B & (1U<<pin))>>pin);
      f58:	76 b3       	in	r23, 0x16	; 22
      f5a:	81 e0       	ldi	r24, 0x01	; 1
      f5c:	90 e0       	ldi	r25, 0x00	; 0
@@ -3031,15 +2567,10 @@ u8_en_dioErrors DIO_readPIN (en_dioPortsType port, en_dioPinsType pin, uint8_t* 
      f7c:	e2 f7       	brpl	.-8      	; 0xf76 <DIO_readPIN+0x5a>
      f7e:	fa 01       	movw	r30, r20
      f80:	80 83       	st	Z, r24
-			return DIO_E_OK;
      f82:	80 e0       	ldi	r24, 0x00	; 0
      f84:	08 95       	ret
-		}
-		else if (port == portc)
      f86:	82 30       	cpi	r24, 0x02	; 2
      f88:	b9 f4       	brne	.+46     	; 0xfb8 <DIO_readPIN+0x9c>
-		{
-			*value = ((RE_PORT_C & (1U<<pin))>>pin);
      f8a:	73 b3       	in	r23, 0x13	; 19
      f8c:	81 e0       	ldi	r24, 0x01	; 1
      f8e:	90 e0       	ldi	r25, 0x00	; 0
@@ -3061,15 +2592,10 @@ u8_en_dioErrors DIO_readPIN (en_dioPortsType port, en_dioPinsType pin, uint8_t* 
      fae:	e2 f7       	brpl	.-8      	; 0xfa8 <DIO_readPIN+0x8c>
      fb0:	fa 01       	movw	r30, r20
      fb2:	80 83       	st	Z, r24
-			return DIO_E_OK;
      fb4:	80 e0       	ldi	r24, 0x00	; 0
      fb6:	08 95       	ret
-		}
-		else if (port == portd)
      fb8:	83 30       	cpi	r24, 0x03	; 3
      fba:	c9 f4       	brne	.+50     	; 0xfee <DIO_readPIN+0xd2>
-		{
-			*value = ((RE_PORT_D & (1U<<pin))>>pin);
      fbc:	70 b3       	in	r23, 0x10	; 16
      fbe:	81 e0       	ldi	r24, 0x01	; 1
      fc0:	90 e0       	ldi	r25, 0x00	; 0
@@ -3091,29 +2617,11 @@ u8_en_dioErrors DIO_readPIN (en_dioPortsType port, en_dioPinsType pin, uint8_t* 
      fe0:	e2 f7       	brpl	.-8      	; 0xfda <DIO_readPIN+0xbe>
      fe2:	fa 01       	movw	r30, r20
      fe4:	80 83       	st	Z, r24
-			return DIO_E_OK;
      fe6:	80 e0       	ldi	r24, 0x00	; 0
      fe8:	08 95       	ret
-			return DIO_InvalidPort;
-		}
-		
-	}
-	else{
-		return DIO_InvalidPin;
      fea:	81 e0       	ldi	r24, 0x01	; 1
      fec:	08 95       	ret
-			*value = ((RE_PORT_D & (1U<<pin))>>pin);
-			return DIO_E_OK;
-		}
-		else
-		{
-			return DIO_InvalidPort;
      fee:	82 e0       	ldi	r24, 0x02	; 2
-		
-	}
-	else{
-		return DIO_InvalidPin;
-	}
      ff0:	08 95       	ret
 
 00000ff2 <__vector_11>:
@@ -3761,10 +3269,9 @@ u8_en_timerErrorsType TIMER_reset (st_timerConfigType* st_config)
     14dc:	22 30       	cpi	r18, 0x02	; 2
     14de:	69 f0       	breq	.+26     	; 0x14fa <TIMER_reset+0x36>
     14e0:	17 c0       	rjmp	.+46     	; 0x1510 <TIMER_reset+0x4c>
-				/*CLEAR_REG(TCNT0);
-				CLEAR_REG(TCCR0);
-				CLEAR_REG(OCR0);
-				CLEAR_REG(TIFR);*/
+		{
+			case TIMER_0:
+				
 				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
 				TCNT0 = st_config->u16_timer_InitialValue;
     14e2:	fc 01       	movw	r30, r24
@@ -3777,18 +3284,17 @@ u8_en_timerErrorsType TIMER_reset (st_timerConfigType* st_config)
 {
 	u8_en_timerErrorsType l_ret = TIMER_E_OK;
     14e8:	80 e0       	ldi	r24, 0x00	; 0
-				CLEAR_REG(TCCR0);
-				CLEAR_REG(OCR0);
-				CLEAR_REG(TIFR);*/
+		{
+			case TIMER_0:
+				
 				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
 				TCNT0 = st_config->u16_timer_InitialValue;
 				break;
     14ea:	08 95       	ret
-				CLEAR_REG(TCCR1B);
-				CLEAR_REG(OCR1AH);
-				CLEAR_REG(OCR1AL);
-				CLEAR_REG(TIFR);*/
-				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				
+			case TIMER_1:
+			
+				/*Configure initial value in TCNT1(high&low) for Timer1 to start count from it*/
 				TCNT1 = st_config->u16_timer_InitialValue;
     14ec:	fc 01       	movw	r30, r24
     14ee:	82 81       	ldd	r24, Z+2	; 0x02
@@ -3802,18 +3308,17 @@ u8_en_timerErrorsType TIMER_reset (st_timerConfigType* st_config)
 {
 	u8_en_timerErrorsType l_ret = TIMER_E_OK;
     14f6:	80 e0       	ldi	r24, 0x00	; 0
-				CLEAR_REG(OCR1AH);
-				CLEAR_REG(OCR1AL);
-				CLEAR_REG(TIFR);*/
-				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				
+			case TIMER_1:
+			
+				/*Configure initial value in TCNT1(high&low) for Timer1 to start count from it*/
 				TCNT1 = st_config->u16_timer_InitialValue;
 				break;
     14f8:	08 95       	ret
-				/*CLEAR_REG(TCNT2);
-				CLEAR_REG(TCCR2);
-				CLEAR_REG(OCR2);
-				CLEAR_REG(TIFR);*/
-				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				
+			case TIMER_2:
+				
+				/*Configure initial value in TCNT1(high&low) for Timer2 to start count from it*/
 				TCNT2 = st_config->u16_timer_InitialValue;
     14fa:	fc 01       	movw	r30, r24
     14fc:	82 81       	ldd	r24, Z+2	; 0x02
@@ -3825,10 +3330,10 @@ u8_en_timerErrorsType TIMER_reset (st_timerConfigType* st_config)
 {
 	u8_en_timerErrorsType l_ret = TIMER_E_OK;
     1500:	80 e0       	ldi	r24, 0x00	; 0
-				CLEAR_REG(TCCR2);
-				CLEAR_REG(OCR2);
-				CLEAR_REG(TIFR);*/
-				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				
+			case TIMER_2:
+				
+				/*Configure initial value in TCNT1(high&low) for Timer2 to start count from it*/
 				TCNT2 = st_config->u16_timer_InitialValue;
 				break;
     1502:	08 95       	ret
@@ -3844,7 +3349,7 @@ u8_en_timerErrorsType TIMER_reset (st_timerConfigType* st_config)
     150a:	08 95       	ret
     150c:	83 e0       	ldi	r24, 0x03	; 3
     150e:	08 95       	ret
-				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				/*Configure initial value in TCNT1(high&low) for Timer2 to start count from it*/
 				TCNT2 = st_config->u16_timer_InitialValue;
 				break;
 				
