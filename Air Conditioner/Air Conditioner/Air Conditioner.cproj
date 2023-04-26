@@ -178,6 +178,9 @@
     <Compile Include="HAL\timer_manager\timer_manager.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="interrupt.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
