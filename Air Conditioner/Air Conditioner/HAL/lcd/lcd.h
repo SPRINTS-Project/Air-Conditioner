@@ -52,12 +52,14 @@ typedef uint8_t u8_en_lcdSpCharType;
 
 
 u8_en_lcdErrorsType LCD_init (st_lcdConfigType* st_config);
- void LCD_cmd(st_lcdConfigType* st_config,uint8_t cmd);
+u8_en_lcdErrorsType LCD_cmd(st_lcdConfigType* st_config,uint8_t cmd);
  void LCD_char(st_lcdConfigType* st_config,uint8_t data);
 u8_en_lcdErrorsType LCD_clear (void);
 u8_en_lcdErrorsType LCD_setCursor (uint8_t u8_row,uint8_t u8_col);
 u8_en_lcdErrorsType LCD_writeString (uint8_t* u8_data);
 u8_en_lcdErrorsType LCD_writeSpChar (u8_en_lcdSpCharType u8_SpChar);
-static void ENABLE(void);
 
+/*
+void ENABLE(void);
+*/
 #endif /* KEYPAD_H	*/
