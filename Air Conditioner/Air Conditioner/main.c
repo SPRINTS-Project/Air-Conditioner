@@ -9,10 +9,7 @@
 
 
 #include "APP/app.h"
-
-
-
-
+#include "MCAL/adc/adc.h"
 int main(void)
 {
 	APP_start();

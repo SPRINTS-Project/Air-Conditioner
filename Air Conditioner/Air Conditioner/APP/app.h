@@ -9,7 +9,8 @@
 
 #ifndef APP_H_
 #define APP_H_
-
+#define F_CPU 8000000UL
+#include <util/delay.h>
 #include <stdlib.h>
 
 #include "../HAL/buzzer/buzzer.h"
@@ -20,6 +21,16 @@
 
 
 #define APP_TIMER_0_INIT_VALUE		240
+#define APP_RESET_BTN				'5'
+#define APP_ADJUST_BTN				'4'
+#define APP_INCREMENT_BTN			'1'
+#define APP_DECREMENT_BTN			'2'
+#define APP_SET_BTN					'3'
+#define APP_NO_BTN					78
+
+
+#define APP_PORT					0
+#define APP_PIN						1
 
 typedef uint8_t u8_programStateType;
 

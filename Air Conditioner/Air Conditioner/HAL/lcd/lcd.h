@@ -11,7 +11,7 @@
 #define LCD_H_
 
 #include "../../MCAL/dio/dio_types.h"
-
+#include"../../bit_manipulation.h"
 
 typedef struct
 {
@@ -24,6 +24,10 @@ typedef struct
 	uint8_t u8_d5Pin[2];
 	uint8_t u8_d6Pin[2];
 	uint8_t u8_d7Pin[2];
+	
+	uint8_t u8_RSpin[2];
+	uint8_t u8_RWpin[2];
+	uint8_t u8_Epin[2];
 }st_lcdConfigType;
 
 
@@ -42,21 +46,20 @@ typedef uint8_t u8_en_lcdErrorsType;
 
 typedef uint8_t u8_en_lcdSpCharType;
 
-#define LCD_EMPTY_HEART				((u8_en_lcdSpCharType)0X00)
-#define LCD_FULL_HEART				((u8_en_lcdSpCharType)0X01)
-#define LCD_BATTARY					((u8_en_lcdSpCharType)0X02)
+
 #define LCD_BELL					((u8_en_lcdSpCharType)0X03)
-#define LCD_SPEAKER					((u8_en_lcdSpCharType)0X04)
-#define LCD_SMILE					((u8_en_lcdSpCharType)0X05)
-#define LCD_PLUG					((u8_en_lcdSpCharType)0X06)
-#define LCD_MUISC					((u8_en_lcdSpCharType)0X07)
+
 
 
 u8_en_lcdErrorsType LCD_init (st_lcdConfigType* st_config);
+u8_en_lcdErrorsType LCD_cmd(st_lcdConfigType* st_config,uint8_t cmd);
+ void LCD_char(st_lcdConfigType* st_config,uint8_t data);
 u8_en_lcdErrorsType LCD_clear (void);
 u8_en_lcdErrorsType LCD_setCursor (uint8_t u8_row,uint8_t u8_col);
 u8_en_lcdErrorsType LCD_writeString (uint8_t* u8_data);
 u8_en_lcdErrorsType LCD_writeSpChar (u8_en_lcdSpCharType u8_SpChar);
 
-
+/*
+void ENABLE(void);
+*/
 #endif /* KEYPAD_H	*/

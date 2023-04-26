@@ -9,8 +9,9 @@
 
 #ifndef DIO_H_
 #define DIO_H_
-
+#include <avr/io.h>
 #include "dio_types.h"
+
 
 u8_en_dioErrors DIO_init (en_dioPortsType port, en_dioPinsType pin, u8_en_dioDirType direction);
 u8_en_dioErrors DIO_writePIN (en_dioPortsType port, en_dioPinsType pin, u8_en_dioLevelType state);

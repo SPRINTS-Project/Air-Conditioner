@@ -2,8 +2,8 @@
  * timer_types.h
  *
  * Created: 4/21/2023 12:27:22 AM
- *  Author: Mahmoud Sarhan
- *	EMAIL : Eng.mahmoud.adel94@gmail.com
+ *  Author: Mohamed Abdel-Wahab
+ *	EMAIL : mohamedhegay22@gmail.com
  */ 
 
 
@@ -11,6 +11,8 @@
 #define TIMER_TYPES_H_
 
 #include <stdint.h>
+#include "../../STD_LIBRARIES/std_types.h"
+#include "../../STD_LIBRARIES/bit_math.h"
 
 
 typedef  void (*timerCallBack) (void);
@@ -22,7 +24,10 @@ typedef uint8_t u8_en_timerErrorsType;
 #define  TIMER_E_OK				((u8_en_timerErrorsType)0x00)
 #define  TIMER_E_NOT_OK			((u8_en_timerErrorsType)0x03)
 
+typedef uint8_t u8_en_timerInterruptFeature;
 
+#define  TIMER_INTERRUPT_FEATURE_ENABLE				((u8_en_timerInterruptFeature)0x00)
+#define  TIMER_INTERRUPT_FEATURE_DISABLE			((u8_en_timerInterruptFeature)0x01)
 
 typedef uint8_t u8_en_timerPrescalerType;
 
@@ -43,19 +48,19 @@ typedef uint8_t u8_en_timerPrescalerType;
 
 typedef uint8_t u8_en_timerNumberType;
 
-#define TIMER_0			((u8_en_timerNumberType)0x00)
-#define TIMER_1			((u8_en_timerNumberType)0x01)
-#define TIMER_2			((u8_en_timerNumberType)0x02)
-
+#define TIMER_0						((u8_en_timerNumberType)0x00)
+#define TIMER_1						((u8_en_timerNumberType)0x01)
+#define TIMER_2						((u8_en_timerNumberType)0x02)
+#define TIMER_INVALID_NUM			((u8_en_timerNumberType)0x03)
 
 
 typedef struct
 {
-	u8_en_timerNumberType u8_timerNum;
-	u8_en_timerPrescalerType u8_timerClock;
-	uint16_t u16_timer_InitialValue;
-	uint8_t u8_timer_ovf_int_enable;
-	timerCallBack callBackFunction;
+	u8_en_timerNumberType u8_timerNum;			/* @ref u8_en_timerNumberType*/
+	u8_en_timerPrescalerType u8_timerClock;		/* @ref u8_en_timerPrescalerType*/
+	uint16_t u16_timer_InitialValue;			/* the pre-loaded value on Timer/Counter Register*/
+	u8_en_timerInterruptFeature u8_timer_ovf_int_enable;	/*timer interrupt mask-ability*/
+	timerCallBack callBackFunction;  /*pointer to function that take void and return nothing(void) ,should loaded with call-back function's address*/
 }st_timerConfigType;
 
 
