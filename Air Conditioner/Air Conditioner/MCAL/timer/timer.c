@@ -375,6 +375,7 @@ u8_en_timerErrorsType TIMER_stop (u8_en_timerNumberType u8_a_timerNum)
 	}
 	return l_ret;
 }
+
 u8_en_timerErrorsType TIMER_reset (st_timerConfigType* st_config)
 {
 	u8_en_timerErrorsType l_ret = TIMER_E_OK;
@@ -388,29 +389,35 @@ u8_en_timerErrorsType TIMER_reset (st_timerConfigType* st_config)
 		{
 			case TIMER_0:
 				/*Clear registers of Timer0 before processing any of them*/
-				CLEAR_REG(TCNT0);
+				/*CLEAR_REG(TCNT0);
 				CLEAR_REG(TCCR0);
 				CLEAR_REG(OCR0);
-				CLEAR_REG(TIFR);
+				CLEAR_REG(TIFR);*/
+				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				TCNT0 = st_config->u16_timer_InitialValue;
 				break;
 				
 			case TIMER_1:
 				/*Clear registers of Timer1 before processing any of them*/
-				CLEAR_REG(TCNT1L);
+				/*CLEAR_REG(TCNT1L);
 				CLEAR_REG(TCNT1H);
 				CLEAR_REG(TCCR1A);
 				CLEAR_REG(TCCR1B);
 				CLEAR_REG(OCR1AH);
 				CLEAR_REG(OCR1AL);
-				CLEAR_REG(TIFR);
+				CLEAR_REG(TIFR);*/
+				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				TCNT1 = st_config->u16_timer_InitialValue;
 				break;
 				
 			case TIMER_2:
 				/*Clear registers of Timer2 before processing any of them*/
-				CLEAR_REG(TCNT2);
+				/*CLEAR_REG(TCNT2);
 				CLEAR_REG(TCCR2);
 				CLEAR_REG(OCR2);
-				CLEAR_REG(TIFR);
+				CLEAR_REG(TIFR);*/
+				/*Configure initial value in TCNT1(high&low) for Timer0 to start count from it*/
+				TCNT2 = st_config->u16_timer_InitialValue;
 				break;
 				
 			default:

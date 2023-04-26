@@ -42,31 +42,31 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config)
 	return l_TempSensor_ret;
 }
 
-u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config , uint8_t * u8_data)
+u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config , float * f32_data)
 {
 	u8_en_tempSensorErrorsType l_TempSensor_ret = TEMP_E_OK;
 	u8_en_adcErrorsType l_adc_ret = ADC_E_OK;
-	uint16_t f64_l_readTemp_ADC = 0;
-	double f64_l_stepSize = 0.0;
+	uint16_t u16_l_readTemp_ADC = 0;
+	float f32_l_stepSize = 0.0;
 	
-	if(NULL== u8_data || NULL==st_config || st_config->u8_channel >= ADC_INVALID_CHANNEL || st_config->u8_prescaler_selection >= ADC_INVALID_PRESCALER)
+	if(NULL== f32_data || NULL==st_config || st_config->u8_channel >= ADC_INVALID_CHANNEL || st_config->u8_prescaler_selection >= ADC_INVALID_PRESCALER)
 	{
 		l_TempSensor_ret = TEMP_E_NOT_OK;
 	}
 	else
 	{
 		
-		l_adc_ret = ADC_read(st_config->u8_channel,&f64_l_readTemp_ADC);
+		l_adc_ret = ADC_read(st_config->u8_channel,&u16_l_readTemp_ADC);
 		
 		if(ADC_E_OK==l_adc_ret)
 		{
 			if( ADC_INTERNAL_2_56V_REF == st_config->u8_ref_selection)
 			{
-				f64_l_stepSize = ( INTERNAL_VOLTAGE /ADC_MAX_RESOLUTION);
+				f32_l_stepSize = ( INTERNAL_VOLTAGE /ADC_MAX_RESOLUTION);
 			}
 			else if(ADC_AVCC == st_config->u8_ref_selection)
 			{
-				f64_l_stepSize = ( AVCC_VOLTAGE /ADC_MAX_RESOLUTION);
+				f32_l_stepSize = ( AVCC_VOLTAGE /ADC_MAX_RESOLUTION);
 			}
 			else
 			{
@@ -79,14 +79,14 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config 
 		}
 		
 		/*get the ADC digital value in analog voltage(DAC) then in temperature degree*/
-		if((((double)f64_l_readTemp_ADC )* f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR) >= MAX_TEMPERATURE_SENSOR_VALUE)
+		if((((float)u16_l_readTemp_ADC )* f32_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR) >= MAX_TEMPERATURE_SENSOR_VALUE)
 		{
 			// if temperature more than maximum ,will saturate at maximum possible temperature the sensor can measure 
-			*u8_data = MAX_TEMPERATURE_SENSOR_VALUE ;
+			*f32_data = MAX_TEMPERATURE_SENSOR_VALUE ;
 		}
 		else
 		{
-			*u8_data = (uint8_t)(((double)f64_l_readTemp_ADC) * f64_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
+			*f32_data = (float)(((double)u16_l_readTemp_ADC) * f32_l_stepSize * VOLTAGE_TO_CELSUIS_FACTOR);
 		}
 		
 	}

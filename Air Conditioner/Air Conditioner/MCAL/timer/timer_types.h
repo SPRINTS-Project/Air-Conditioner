@@ -26,8 +26,8 @@ typedef uint8_t u8_en_timerErrorsType;
 
 typedef uint8_t u8_en_timerInterruptFeature;
 
-#define  TIMER_INTERRUPT_FEATURE_ENABLE				((u8_en_timerInterruptFeature)0x00)
-#define  TIMER_INTERRUPT_FEATURE_DISABLE			((u8_en_timerInterruptFeature)0x01)
+#define  TIMER_INTERRUPT_FEATURE_ENABLE				((u8_en_timerInterruptFeature)0x01)
+#define  TIMER_INTERRUPT_FEATURE_DISABLE			((u8_en_timerInterruptFeature)0x00)
 
 typedef uint8_t u8_en_timerPrescalerType;
 

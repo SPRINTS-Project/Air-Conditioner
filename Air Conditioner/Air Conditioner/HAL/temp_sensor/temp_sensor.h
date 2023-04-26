@@ -47,6 +47,6 @@ u8_en_tempSensorErrorsType TEMP_SENSOR_init (st_tempSensorConfigType* st_config)
 * TEMP_E_OK :the function done successfully
 * TEMP_E_NOT_OK :the function has issues performing the function
 */
-u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config , uint8_t * u8_data);
+u8_en_tempSensorErrorsType TEMP_SENSOR_read (st_tempSensorConfigType* st_config , float * f32_data);
 
 #endif /*	TEMP_SENSOR_H	*/

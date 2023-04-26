@@ -18,9 +18,11 @@
 #include "../HAL/lcd/lcd.h"
 #include "../HAL/temp_sensor/temp_sensor.h"
 #include "../HAL/timer_manager/timer_manager.h"
+#include "../interrupt.h"
+//#include <avr/interrupt.h>
 
 
-#define APP_TIMER_0_INIT_VALUE		240
+#define APP_TIMER_1_INIT_VALUE		61448
 #define APP_RESET_BTN				'5'
 #define APP_ADJUST_BTN				'4'
 #define APP_INCREMENT_BTN			'1'
