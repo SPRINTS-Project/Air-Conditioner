@@ -10,7 +10,7 @@
 
 #include "adc.h"
 
-static double Quantisation_step;
+double Quantisation_step;
 u8_en_adcErrorsType ADC_init (st_adcConfigType* st_config)
 {
 	u8_en_adcErrorsType ret = ADC_E_OK;
