@@ -40,11 +40,11 @@
 *-1-it holds ADC configuration  (st_adcConfigType* st_config)
 *
 *   -Return-
-*   Std_ReturnType
+*   u8_en_adcErrorsType
 *
 *   -Return cases-
-*-1- (E_NOK) if there is something wrong
-*-2- (E_OK) otherwise
+*-1- (ADC_E_NOK) if there is something wrong
+*-2- (ADC_E_OK) otherwise
 */
 u8_en_adcErrorsType ADC_init (st_adcConfigType* st_config);
 
@@ -59,11 +59,11 @@ u8_en_adcErrorsType ADC_init (st_adcConfigType* st_config);
 *-1-it holds the result of conversion multiplied by quantisation step value  (double *data)
 *
 *   -Return-
-*   Std_ReturnType
+*   u8_en_adcErrorsType
 *
 *   -Return cases-
-*-1- (E_NOK) if there is something wrong
-*-2- (E_OK) otherwise
+*-1- (ADC_E_NOK) if there is something wrong
+*-2- (ADC_E_OK) otherwise
 */
 u8_en_adcErrorsType ADC_read (u8_en_adcChannelId u8_channelID,uint16_t * u16_data);
 
